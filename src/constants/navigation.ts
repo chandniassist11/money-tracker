@@ -1,12 +1,4 @@
-import {
-  LayoutDashboard,
-  Receipt,
-  Wallet,
-  Folder,
-  PiggyBank,
-  BarChart3,
-  Settings,
-} from "lucide-react";
+import { LayoutDashboard, Receipt, Wallet, Folder, PiggyBank, ChartBar as BarChart3, Settings } from "lucide-react";
 
 import type { NavigationItem } from "../types/navigation";
 

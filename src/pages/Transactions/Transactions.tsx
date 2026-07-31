@@ -1,14 +1,6 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import {
-  Plus,
-  Search,
-  Pencil,
-  Trash2,
-  ArrowUpRight,
-  ArrowDownRight,
-  Filter,
-} from "lucide-react";
+import { Plus, Search, Pencil, Trash2, ArrowUpRight, ArrowDownRight, ListFilter as Filter } from "lucide-react";
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";

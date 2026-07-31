@@ -1,16 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import {
-  LayoutDashboard,
-  Receipt,
-  Wallet,
-  Folder,
-  PiggyBank,
-  BarChart3,
-  Settings,
-  X,
-  TrendingUp,
-} from "lucide-react";
+import { LayoutDashboard, Receipt, Wallet, Folder, PiggyBank, ChartBar as BarChart3, Settings, X, TrendingUp } from "lucide-react";
 import clsx from "clsx";
 
 const menuItems = [

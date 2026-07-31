@@ -1,4 +1,4 @@
-import { Menu, Search, UserCircle2 } from "lucide-react";
+import { Menu, Search, CircleUser as UserCircle2 } from "lucide-react";
 import { usePageTitle } from "../../hooks/usePageTitle";
 
 interface NavbarProps {

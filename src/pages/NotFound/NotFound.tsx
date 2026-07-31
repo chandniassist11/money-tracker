@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Home, Compass } from "lucide-react";
+import { Hop as Home, Compass } from "lucide-react";
 import Button from "../../components/ui/Button";
 
 const NotFound = () => {
