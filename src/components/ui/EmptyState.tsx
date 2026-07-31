@@ -15,15 +15,17 @@ const EmptyState = ({
   action,
 }: EmptyStateProps) => {
   return (
-    <div className="flex flex-col items-center justify-center gap-3 px-6 py-16 text-center">
-      <div className="rounded-2xl bg-slate-100 p-4 text-slate-400">
+    <div className="flex flex-col items-center justify-center gap-3 px-6 py-14 text-center animate-fade-in">
+      <div className="rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200/50 p-4 text-slate-400 ring-1 ring-slate-200/60">
         {icon ?? <Inbox size={32} />}
       </div>
       <h3 className="text-base font-semibold text-slate-700">{title}</h3>
       {description && (
-        <p className="max-w-sm text-sm text-slate-500">{description}</p>
+        <p className="max-w-sm text-sm leading-relaxed text-slate-500">
+          {description}
+        </p>
       )}
-      {action && <div className="mt-2">{action}</div>}
+      {action && <div className="mt-3">{action}</div>}
     </div>
   );
 };

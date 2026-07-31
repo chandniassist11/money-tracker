@@ -5,6 +5,7 @@ interface ProgressBarProps {
   max: number;
   className?: string;
   colorClass?: string;
+  trackClass?: string;
 }
 
 const ProgressBar = ({
@@ -12,15 +13,22 @@ const ProgressBar = ({
   max,
   className,
   colorClass,
+  trackClass,
 }: ProgressBarProps) => {
   const pct = max > 0 ? Math.min(100, (value / max) * 100) : 0;
   const over = pct >= 100;
   return (
-    <div className={clsx("h-2 w-full overflow-hidden rounded-full bg-slate-200", className)}>
+    <div
+      className={clsx(
+        "h-2.5 w-full overflow-hidden rounded-full",
+        trackClass ?? "bg-slate-150 bg-slate-200/70",
+        className
+      )}
+    >
       <div
         className={clsx(
-          "h-full rounded-full transition-all duration-500",
-          colorClass ?? (over ? "bg-rose-500" : "bg-emerald-500")
+          "h-full rounded-full transition-all duration-700 ease-out",
+          colorClass ?? (over ? "bg-rose-500" : "bg-gradient-to-r from-emerald-400 to-emerald-500")
         )}
         style={{ width: `${pct}%` }}
       />

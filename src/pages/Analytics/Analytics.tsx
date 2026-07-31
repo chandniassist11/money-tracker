@@ -31,6 +31,7 @@ import { useFinanceSelectors } from "../../store/hooks";
 import { useCurrency } from "../../store/useCurrency";
 import { formatCurrency, currentMonth } from "../../lib/format";
 import { useAppSelector } from "../../store";
+import { chartTooltipStyle, chartAxisProps, chartGridProps } from "../../lib/chartConfig";
 
 const Analytics = () => {
   useLoadAppData();
@@ -111,7 +112,7 @@ const Analytics = () => {
       </div>
 
       {/* Summary */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="stagger grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
           title="Total Income"
           value={formatCurrency(totalIncome, cur)}
@@ -141,17 +142,20 @@ const Analytics = () => {
 
       {/* Cash flow */}
       <Card>
-        <h3 className="mb-4 font-semibold text-slate-800">Cash Flow Analysis</h3>
+        <div className="mb-4">
+          <h3 className="font-bold text-slate-800">Cash Flow Analysis</h3>
+          <p className="text-xs text-slate-400">Monthly comparison</p>
+        </div>
         {cashFlowData.every((d) => d.Income === 0 && d.Expense === 0) ? (
           <EmptyState title="No data" description="Add transactions to see cash flow." />
         ) : (
           <ResponsiveContainer width="100%" height={320}>
             <BarChart data={cashFlowData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-              <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
-              <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
-              <Tooltip formatter={(v) => formatCurrency(Number(v), cur)} contentStyle={{ borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 13 }} />
-              <Legend wrapperStyle={{ fontSize: 12 }} />
+              <CartesianGrid {...chartGridProps} />
+              <XAxis dataKey="name" {...chartAxisProps} />
+              <YAxis {...chartAxisProps} />
+              <Tooltip formatter={(v) => formatCurrency(Number(v), cur)} contentStyle={chartTooltipStyle} />
+              <Legend wrapperStyle={{ fontSize: 12 }} iconType="circle" iconSize={8} />
               <Bar dataKey="Income" fill="#10b981" radius={[6, 6, 0, 0]} />
               <Bar dataKey="Expense" fill="#f43f5e" radius={[6, 6, 0, 0]} />
             </BarChart>
@@ -162,7 +166,10 @@ const Analytics = () => {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Expense by category */}
         <Card>
-          <h3 className="mb-4 font-semibold text-slate-800">Expense Breakdown</h3>
+          <div className="mb-4">
+            <h3 className="font-bold text-slate-800">Expense Breakdown</h3>
+            <p className="text-xs text-slate-400">By category, this month</p>
+          </div>
           {expenseByCategoryArray.length === 0 ? (
             <EmptyState title="No expenses this month" />
           ) : (
@@ -175,13 +182,14 @@ const Analytics = () => {
                   innerRadius={55}
                   outerRadius={90}
                   paddingAngle={3}
+                  cornerRadius={6}
                 >
                   {expenseByCategoryArray.map((e, i) => (
                     <Cell key={i} fill={e.color} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(v) => formatCurrency(Number(v), cur)} contentStyle={{ borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 13 }} />
-                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Tooltip formatter={(v) => formatCurrency(Number(v), cur)} contentStyle={chartTooltipStyle} />
+                <Legend wrapperStyle={{ fontSize: 12 }} iconType="circle" iconSize={8} />
               </PieChart>
             </ResponsiveContainer>
           )}
@@ -189,7 +197,10 @@ const Analytics = () => {
 
         {/* Income by category */}
         <Card>
-          <h3 className="mb-4 font-semibold text-slate-800">Income Sources</h3>
+          <div className="mb-4">
+            <h3 className="font-bold text-slate-800">Income Sources</h3>
+            <p className="text-xs text-slate-400">By category, all time</p>
+          </div>
           {incomeByCategory.length === 0 ? (
             <EmptyState title="No income recorded" />
           ) : (
@@ -202,13 +213,14 @@ const Analytics = () => {
                   innerRadius={55}
                   outerRadius={90}
                   paddingAngle={3}
+                  cornerRadius={6}
                 >
                   {incomeByCategory.map((e, i) => (
                     <Cell key={i} fill={e.color} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(v) => formatCurrency(Number(v), cur)} contentStyle={{ borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 13 }} />
-                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Tooltip formatter={(v) => formatCurrency(Number(v), cur)} contentStyle={chartTooltipStyle} />
+                <Legend wrapperStyle={{ fontSize: 12 }} iconType="circle" iconSize={8} />
               </PieChart>
             </ResponsiveContainer>
           )}
@@ -217,23 +229,26 @@ const Analytics = () => {
 
       {/* Net savings trend */}
       <Card>
-        <h3 className="mb-4 font-semibold text-slate-800">Monthly Net Savings Trend</h3>
+        <div className="mb-4">
+          <h3 className="font-bold text-slate-800">Monthly Net Savings Trend</h3>
+          <p className="text-xs text-slate-400">Income minus expense</p>
+        </div>
         {cashFlowData.every((d) => d.Net === 0) ? (
           <EmptyState title="No data" />
         ) : (
           <ResponsiveContainer width="100%" height={280}>
             <LineChart data={cashFlowData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-              <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
-              <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
-              <Tooltip formatter={(v) => formatCurrency(Number(v), cur)} contentStyle={{ borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 13 }} />
+              <CartesianGrid {...chartGridProps} />
+              <XAxis dataKey="name" {...chartAxisProps} />
+              <YAxis {...chartAxisProps} />
+              <Tooltip formatter={(v) => formatCurrency(Number(v), cur)} contentStyle={chartTooltipStyle} />
               <Line
                 type="monotone"
                 dataKey="Net"
                 stroke="#10b981"
                 strokeWidth={3}
                 dot={{ r: 4, fill: "#10b981" }}
-                activeDot={{ r: 6 }}
+                activeDot={{ r: 6, fill: "#10b981", strokeWidth: 2, stroke: "#fff" }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -243,7 +258,10 @@ const Analytics = () => {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Budget utilization radial */}
         <Card>
-          <h3 className="mb-4 font-semibold text-slate-800">Budget Utilization</h3>
+          <div className="mb-4">
+            <h3 className="font-bold text-slate-800">Budget Utilization</h3>
+            <p className="text-xs text-slate-400">This month</p>
+          </div>
           {budgetUtilization.length === 0 ? (
             <EmptyState
               title="No budgets set"
@@ -269,7 +287,7 @@ const Analytics = () => {
                 />
                 <Tooltip
                   formatter={(v) => `${v}%`}
-                  contentStyle={{ borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 13 }}
+                  contentStyle={chartTooltipStyle}
                 />
               </RadialBarChart>
             </ResponsiveContainer>
@@ -278,7 +296,10 @@ const Analytics = () => {
 
         {/* Account distribution */}
         <Card>
-          <h3 className="mb-4 font-semibold text-slate-800">Account Distribution</h3>
+          <div className="mb-4">
+            <h3 className="font-bold text-slate-800">Account Distribution</h3>
+            <p className="text-xs text-slate-400">By balance</p>
+          </div>
           {accountDistribution.length === 0 ? (
             <EmptyState title="No accounts" />
           ) : (
@@ -289,13 +310,14 @@ const Analytics = () => {
                   dataKey="value"
                   nameKey="name"
                   outerRadius={90}
+                  cornerRadius={6}
                 >
                   {accountDistribution.map((e, i) => (
                     <Cell key={i} fill={e.fill} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(v) => formatCurrency(Number(v), cur)} contentStyle={{ borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 13 }} />
-                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Tooltip formatter={(v) => formatCurrency(Number(v), cur)} contentStyle={chartTooltipStyle} />
+                <Legend wrapperStyle={{ fontSize: 12 }} iconType="circle" iconSize={8} />
               </PieChart>
             </ResponsiveContainer>
           )}

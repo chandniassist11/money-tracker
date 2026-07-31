@@ -10,17 +10,17 @@ interface BadgeProps {
 }
 
 const toneClasses: Record<Tone, string> = {
-  income: "bg-emerald-100 text-emerald-700",
-  expense: "bg-rose-100 text-rose-700",
-  neutral: "bg-slate-100 text-slate-600",
-  warning: "bg-amber-100 text-amber-700",
+  income: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200/60",
+  expense: "bg-rose-50 text-rose-700 ring-1 ring-rose-200/60",
+  neutral: "bg-slate-100 text-slate-600 ring-1 ring-slate-200/60",
+  warning: "bg-amber-50 text-amber-700 ring-1 ring-amber-200/60",
 };
 
 const Badge = ({ children, tone = "neutral", className }: BadgeProps) => {
   return (
     <span
       className={clsx(
-        "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
+        "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold",
         toneClasses[tone],
         className
       )}

@@ -6,6 +6,7 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   Plus,
+  Sparkles,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -30,6 +31,7 @@ import { useCurrency } from "../../store/useCurrency";
 import { formatCurrency, formatShortDate } from "../../lib/format";
 import { useLoadAppData } from "../../store/useLoadAppData";
 import { getIcon } from "../../lib/icons";
+import { chartTooltipStyle, chartAxisProps, chartGridProps } from "../../lib/chartConfig";
 
 const Dashboard = () => {
   useLoadAppData();
@@ -53,36 +55,47 @@ const Dashboard = () => {
     Expense: m.expense,
   }));
 
+  const greeting = (() => {
+    const h = new Date().getHours();
+    if (h < 12) return "Good morning";
+    if (h < 18) return "Good afternoon";
+    return "Good evening";
+  })();
+
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h2 className="text-xl font-bold text-slate-800">
-            Welcome back 👋
-          </h2>
-          <p className="text-sm text-slate-500">
-            Here&apos;s your financial overview.
-          </p>
+      {/* Hero */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-800 via-slate-900 to-emerald-950 p-6 sm:p-8">
+        <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-emerald-500/10 blur-3xl" />
+        <div className="absolute -bottom-12 left-1/3 h-48 w-48 rounded-full bg-blue-500/10 blur-3xl" />
+        <div className="relative flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-emerald-300 ring-1 ring-white/10">
+              <Sparkles size={13} /> {greeting}
+            </div>
+            <h2 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+              {formatCurrency(totalBalance, cur)}
+            </h2>
+            <p className="mt-1 text-sm text-slate-300">
+              Your total balance across all accounts
+            </p>
+          </div>
+          <Button
+            onClick={() => navigate("/transactions?new=1")}
+            className="bg-white text-slate-800 shadow-lg hover:bg-slate-100 hover:shadow-xl"
+          >
+            <Plus size={18} /> Add Transaction
+          </Button>
         </div>
-        <Button onClick={() => navigate("/transactions?new=1")}>
-          <Plus size={18} /> Add Transaction
-        </Button>
       </div>
 
       {/* Stat cards */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard
-          title="Total Balance"
-          value={formatCurrency(totalBalance, cur)}
-          icon={<Wallet size={22} />}
-          tone="emerald"
-          subtitle="Across all accounts"
-        />
+      <div className="stagger grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
           title="Total Income"
           value={formatCurrency(totalIncome, cur)}
           icon={<TrendingUp size={22} />}
-          tone="blue"
+          tone="emerald"
           subtitle="All time"
         />
         <StatCard
@@ -99,14 +112,31 @@ const Dashboard = () => {
           tone="amber"
           subtitle={`${budgetUsedPct}% of ${formatCurrency(allocatedBudget, cur)} used`}
         />
+        <StatCard
+          title="Net Savings"
+          value={formatCurrency(totalIncome - totalExpense, cur)}
+          icon={<Wallet size={22} />}
+          tone="blue"
+          subtitle={totalIncome > 0 ? `${Math.round(((totalIncome - totalExpense) / totalIncome) * 100)}% rate` : "—"}
+        />
       </div>
 
       {/* Charts */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="font-semibold text-slate-800">Income vs Expense</h3>
-            <span className="text-xs text-slate-400">Last 6 months</span>
+            <div>
+              <h3 className="font-bold text-slate-800">Income vs Expense</h3>
+              <p className="text-xs text-slate-400">Last 6 months</p>
+            </div>
+            <div className="flex items-center gap-3 text-xs font-medium">
+              <span className="flex items-center gap-1.5 text-slate-500">
+                <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" /> Income
+              </span>
+              <span className="flex items-center gap-1.5 text-slate-500">
+                <span className="h-2.5 w-2.5 rounded-full bg-rose-500" /> Expense
+              </span>
+            </div>
           </div>
           {areaData.every((d) => d.Income === 0 && d.Expense === 0) ? (
             <EmptyState
@@ -118,30 +148,49 @@ const Dashboard = () => {
               <AreaChart data={areaData}>
                 <defs>
                   <linearGradient id="gInc" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#10b981" stopOpacity={0.3} />
+                    <stop offset="0%" stopColor="#10b981" stopOpacity={0.35} />
                     <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="gExp" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#f43f5e" stopOpacity={0.3} />
+                    <stop offset="0%" stopColor="#f43f5e" stopOpacity={0.35} />
                     <stop offset="100%" stopColor="#f43f5e" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
+                <CartesianGrid {...chartGridProps} />
+                <XAxis dataKey="name" {...chartAxisProps} />
+                <YAxis {...chartAxisProps} />
                 <Tooltip
                   formatter={(v) => formatCurrency(Number(v), cur)}
-                  contentStyle={{ borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 13 }}
+                  contentStyle={chartTooltipStyle}
                 />
-                <Area type="monotone" dataKey="Income" stroke="#10b981" strokeWidth={2} fill="url(#gInc)" />
-                <Area type="monotone" dataKey="Expense" stroke="#f43f5e" strokeWidth={2} fill="url(#gExp)" />
+                <Area
+                  type="monotone"
+                  dataKey="Income"
+                  stroke="#10b981"
+                  strokeWidth={2.5}
+                  fill="url(#gInc)"
+                  dot={false}
+                  activeDot={{ r: 5, fill: "#10b981", strokeWidth: 2, stroke: "#fff" }}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="Expense"
+                  stroke="#f43f5e"
+                  strokeWidth={2.5}
+                  fill="url(#gExp)"
+                  dot={false}
+                  activeDot={{ r: 5, fill: "#f43f5e", strokeWidth: 2, stroke: "#fff" }}
+                />
               </AreaChart>
             </ResponsiveContainer>
           )}
         </Card>
 
         <Card>
-          <h3 className="mb-4 font-semibold text-slate-800">Spending by Category</h3>
+          <div className="mb-4">
+            <h3 className="font-bold text-slate-800">Spending by Category</h3>
+            <p className="text-xs text-slate-400">This month</p>
+          </div>
           {expenseByCategoryArray.length === 0 ? (
             <EmptyState
               title="No expenses this month"
@@ -157,13 +206,21 @@ const Dashboard = () => {
                   innerRadius={55}
                   outerRadius={90}
                   paddingAngle={3}
+                  cornerRadius={6}
                 >
                   {expenseByCategoryArray.map((entry, i) => (
                     <Cell key={i} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(v) => formatCurrency(Number(v), cur)} contentStyle={{ borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 13 }} />
-                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Tooltip
+                  formatter={(v) => formatCurrency(Number(v), cur)}
+                  contentStyle={chartTooltipStyle}
+                />
+                <Legend
+                  wrapperStyle={{ fontSize: 12 }}
+                  iconType="circle"
+                  iconSize={8}
+                />
               </PieChart>
             </ResponsiveContainer>
           )}
@@ -173,7 +230,10 @@ const Dashboard = () => {
       {/* Recent transactions */}
       <Card>
         <div className="mb-4 flex items-center justify-between">
-          <h3 className="font-semibold text-slate-800">Recent Transactions</h3>
+          <div>
+            <h3 className="font-bold text-slate-800">Recent Transactions</h3>
+            <p className="text-xs text-slate-400">Your latest activity</p>
+          </div>
           <Button variant="ghost" size="sm" onClick={() => navigate("/transactions")}>
             View all
           </Button>
@@ -194,9 +254,12 @@ const Dashboard = () => {
               const Icon = getIcon(t.category?.icon ?? "Wallet");
               const isIncome = t.type === "income";
               return (
-                <div key={t.id} className="flex items-center gap-4 py-3">
+                <div
+                  key={t.id}
+                  className="group flex items-center gap-4 py-3 transition-colors hover:bg-slate-50/50"
+                >
                   <div
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform group-hover:scale-105"
                     style={{
                       backgroundColor: `${t.category?.color ?? "#64748b"}1a`,
                       color: t.category?.color ?? "#64748b",
@@ -205,7 +268,7 @@ const Dashboard = () => {
                     <Icon size={18} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium text-slate-800">
+                    <p className="truncate text-sm font-semibold text-slate-800">
                       {t.category?.name ?? "Unknown"}
                     </p>
                     <p className="truncate text-xs text-slate-400">
@@ -214,7 +277,7 @@ const Dashboard = () => {
                   </div>
                   <div className="text-right">
                     <p
-                      className={`text-sm font-semibold ${
+                      className={`text-sm font-bold ${
                         isIncome ? "text-emerald-600" : "text-rose-600"
                       }`}
                     >
@@ -225,11 +288,17 @@ const Dashboard = () => {
                       {formatShortDate(t.date)}
                     </p>
                   </div>
-                  {isIncome ? (
-                    <ArrowUpRight size={16} className="text-emerald-500" />
-                  ) : (
-                    <ArrowDownRight size={16} className="text-rose-500" />
-                  )}
+                  <div
+                    className={`flex h-7 w-7 items-center justify-center rounded-full ${
+                      isIncome ? "bg-emerald-50" : "bg-rose-50"
+                    }`}
+                  >
+                    {isIncome ? (
+                      <ArrowUpRight size={14} className="text-emerald-500" />
+                    ) : (
+                      <ArrowDownRight size={14} className="text-rose-500" />
+                    )}
+                  </div>
                 </div>
               );
             })}
