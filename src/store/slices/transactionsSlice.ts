@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { Transaction, TransactionWithDetails } from "../../types";
-import { supabase } from "../../lib/supabaseClient";
+import { loadCollection, saveCollection, uid, nowISO } from "../../lib/localStorage";
 
 interface TransactionsState {
   items: TransactionWithDetails[];
@@ -14,32 +14,21 @@ const initialState: TransactionsState = {
   error: null,
 };
 
+const sortByDate = (items: TransactionWithDetails[]) =>
+  [...items].sort((a, b) => {
+    if (a.date !== b.date) return a.date < b.date ? 1 : -1;
+    return a.created_at < b.created_at ? 1 : -1;
+  });
+
 export const fetchTransactions = createAsyncThunk(
   "transactions/fetchAll",
-  async () => {
-    const { data, error } = await supabase
-      .from("transactions")
-      .select("*, category:categories(*), account:accounts(*)")
-      .order("date", { ascending: false })
-      .order("created_at", { ascending: false });
-    if (error) throw new Error(error.message);
-    return (data ?? []) as unknown as TransactionWithDetails[];
-  }
+  async () => loadCollection<Transaction>("transactions")
 );
 
 export const createTransaction = createAsyncThunk(
   "transactions/create",
-  async (
-    payload: Omit<Transaction, "id" | "created_at">
-  ): Promise<TransactionWithDetails> => {
-    const { data, error } = await supabase
-      .from("transactions")
-      .insert(payload)
-      .select("*, category:categories(*), account:accounts(*)")
-      .single();
-    if (error) throw new Error(error.message);
-    return data as unknown as TransactionWithDetails;
-  }
+  async (payload: Omit<Transaction, "id" | "created_at">) =>
+    ({ ...payload, id: uid(), created_at: nowISO() } as Transaction)
 );
 
 export const updateTransaction = createAsyncThunk(
@@ -47,28 +36,13 @@ export const updateTransaction = createAsyncThunk(
   async ({
     id,
     ...payload
-  }: Partial<Omit<Transaction, "created_at">> & { id: string }) => {
-    const { data, error } = await supabase
-      .from("transactions")
-      .update(payload)
-      .eq("id", id)
-      .select("*, category:categories(*), account:accounts(*)")
-      .single();
-    if (error) throw new Error(error.message);
-    return data as unknown as TransactionWithDetails;
-  }
+  }: Partial<Omit<Transaction, "created_at">> & { id: string }) =>
+    ({ id, ...payload } as Transaction)
 );
 
 export const deleteTransaction = createAsyncThunk(
   "transactions/delete",
-  async (id: string) => {
-    const { error } = await supabase
-      .from("transactions")
-      .delete()
-      .eq("id", id);
-    if (error) throw new Error(error.message);
-    return id;
-  }
+  async (id: string) => id
 );
 
 const transactionsSlice = createSlice({
@@ -83,21 +57,32 @@ const transactionsSlice = createSlice({
       })
       .addCase(fetchTransactions.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
-      })
-      .addCase(fetchTransactions.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message ?? "Failed to load transactions";
+        state.items = sortByDate(action.payload);
       })
       .addCase(createTransaction.fulfilled, (state, action) => {
-        state.items.unshift(action.payload);
+        state.items = sortByDate([action.payload, ...state.items]);
+        saveCollection(
+          "transactions",
+          state.items.map(({ category, account, ...rest }) => rest)
+        );
       })
       .addCase(updateTransaction.fulfilled, (state, action) => {
         const idx = state.items.findIndex((t) => t.id === action.payload.id);
-        if (idx !== -1) state.items[idx] = action.payload;
+        if (idx !== -1) {
+          state.items[idx] = { ...state.items[idx], ...action.payload };
+          state.items = sortByDate(state.items);
+          saveCollection(
+            "transactions",
+            state.items.map(({ category, account, ...rest }) => rest)
+          );
+        }
       })
       .addCase(deleteTransaction.fulfilled, (state, action) => {
         state.items = state.items.filter((t) => t.id !== action.payload);
+        saveCollection(
+          "transactions",
+          state.items.map(({ category, account, ...rest }) => rest)
+        );
       });
   },
 });

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { Account } from "../../types";
-import { supabase } from "../../lib/supabaseClient";
+import { loadCollection, saveCollection, uid, nowISO } from "../../lib/localStorage";
 
 interface AccountsState {
   items: Account[];
@@ -14,52 +14,32 @@ const initialState: AccountsState = {
   error: null,
 };
 
-export const fetchAccounts = createAsyncThunk(
-  "accounts/fetchAll",
-  async () => {
-    const { data, error } = await supabase
-      .from("accounts")
-      .select("*")
-      .order("created_at", { ascending: false });
-    if (error) throw new Error(error.message);
-    return (data ?? []) as Account[];
-  }
-);
+export const fetchAccounts = createAsyncThunk("accounts/fetchAll", async () => {
+  return loadCollection<Account>("accounts");
+});
 
 export const createAccount = createAsyncThunk(
   "accounts/create",
   async (payload: Omit<Account, "id" | "created_at">) => {
-    const { data, error } = await supabase
-      .from("accounts")
-      .insert(payload)
-      .select()
-      .single();
-    if (error) throw new Error(error.message);
-    return data as Account;
+    const account: Account = {
+      ...payload,
+      id: uid(),
+      created_at: nowISO(),
+    };
+    return account;
   }
 );
 
 export const updateAccount = createAsyncThunk(
   "accounts/update",
   async ({ id, ...payload }: Partial<Account> & { id: string }) => {
-    const { data, error } = await supabase
-      .from("accounts")
-      .update(payload)
-      .eq("id", id)
-      .select()
-      .single();
-    if (error) throw new Error(error.message);
-    return data as Account;
+    return { id, ...payload } as Account;
   }
 );
 
 export const deleteAccount = createAsyncThunk(
   "accounts/delete",
-  async (id: string) => {
-    const { error } = await supabase.from("accounts").delete().eq("id", id);
-    if (error) throw new Error(error.message);
-    return id;
-  }
+  async (id: string) => id
 );
 
 const accountsSlice = createSlice({
@@ -76,19 +56,20 @@ const accountsSlice = createSlice({
         state.loading = false;
         state.items = action.payload;
       })
-      .addCase(fetchAccounts.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message ?? "Failed to load accounts";
-      })
       .addCase(createAccount.fulfilled, (state, action) => {
         state.items.unshift(action.payload);
+        saveCollection("accounts", state.items);
       })
       .addCase(updateAccount.fulfilled, (state, action) => {
         const idx = state.items.findIndex((a) => a.id === action.payload.id);
-        if (idx !== -1) state.items[idx] = action.payload;
+        if (idx !== -1) {
+          state.items[idx] = { ...state.items[idx], ...action.payload };
+          saveCollection("accounts", state.items);
+        }
       })
       .addCase(deleteAccount.fulfilled, (state, action) => {
         state.items = state.items.filter((a) => a.id !== action.payload);
+        saveCollection("accounts", state.items);
       });
   },
 });
