@@ -8,7 +8,7 @@ import {
   Settings,
 } from "lucide-react";
 
-import { NavigationItem } from "../types/navigation";
+import type { NavigationItem } from "../types/navigation";
 
 export const navigationItems: NavigationItem[] = [
   {
