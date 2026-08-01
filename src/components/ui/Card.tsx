@@ -11,9 +11,9 @@ const Card = ({ children, className, hover = false }: CardProps) => {
   return (
     <div
       className={clsx(
-        "p-10 rounded-2xl border border-slate-200/80 bg-white shadow-sm",
+        "p-10 rounded-2xl border border-slate-200/80 bg-white shadow-md",
         hover &&
-          "transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-200/60",
+          "transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl",
         className
       )}
     >
