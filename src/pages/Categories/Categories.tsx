@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Plus, Pencil, Trash2, Search } from "lucide-react";
+import { Plus, Pencil, Trash2, Search, Folder } from "lucide-react";
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
@@ -67,42 +67,45 @@ const Categories = () => {
         </Button>
       </div>
 
-      <Card>
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <div className="inline-flex rounded-xl bg-slate-100 p-1">
-            <button
-              onClick={() => setTab("expense")}
-              className={`rounded-lg px-4 py-1.5 text-sm font-medium transition ${
-                tab === "expense"
-                  ? "bg-white text-rose-600 shadow-sm"
-                  : "text-slate-500 hover:text-slate-700"
-              }`}
-            >
-              Expense
-            </button>
-            <button
-              onClick={() => setTab("income")}
-              className={`rounded-lg px-4 py-1.5 text-sm font-medium transition ${
-                tab === "income"
-                  ? "bg-white text-emerald-600 shadow-sm"
-                  : "text-slate-500 hover:text-slate-700"
-              }`}
-            >
-              Income
-            </button>
-          </div>
-          <div className="w-full sm:w-64">
-            <Input
-              placeholder="Search categories..."
-              icon={<Search size={16} />}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+      <Card className="overflow-hidden">
+        <div className="border-b border-slate-100 bg-slate-50/50 px-4 py-3 sm:px-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="inline-flex rounded-xl bg-slate-100 p-1">
+              <button
+                onClick={() => setTab("expense")}
+                className={`rounded-lg px-4 py-1.5 text-sm font-semibold transition ${
+                  tab === "expense"
+                    ? "bg-white text-rose-600 shadow-sm"
+                    : "text-slate-500 hover:text-slate-700"
+                }`}
+              >
+                Expense
+              </button>
+              <button
+                onClick={() => setTab("income")}
+                className={`rounded-lg px-4 py-1.5 text-sm font-semibold transition ${
+                  tab === "income"
+                    ? "bg-white text-emerald-600 shadow-sm"
+                    : "text-slate-500 hover:text-slate-700"
+                }`}
+              >
+                Income
+              </button>
+            </div>
+            <div className="w-full sm:w-64">
+              <Input
+                placeholder="Search categories..."
+                icon={<Search size={16} />}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
           </div>
         </div>
 
         {filtered.length === 0 ? (
           <EmptyState
+            icon={<Folder size={32} />}
             title="No categories found"
             description={`No ${tab} categories match. Create one to get started.`}
             action={
@@ -117,23 +120,23 @@ const Categories = () => {
             }
           />
         ) : (
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="stagger grid grid-cols-1 gap-3 p-4 sm:grid-cols-2 lg:grid-cols-3 sm:p-5">
             {filtered.map((c) => {
               const Icon = getIcon(c.icon);
               const count = usageCount[c.id] ?? 0;
               return (
                 <div
                   key={c.id}
-                  className="group flex items-center gap-3 rounded-xl border border-slate-200 p-3 transition hover:border-slate-300 hover:shadow-sm"
+                  className="group flex items-center gap-3 rounded-2xl border border-slate-200/80 p-3.5 transition-all duration-200 hover:border-slate-300 hover:shadow-md hover:shadow-slate-200/50"
                 >
                   <div
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110"
                     style={{ backgroundColor: `${c.color}1a`, color: c.color }}
                   >
                     <Icon size={20} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="font-medium text-slate-800">{c.name}</p>
+                    <p className="font-semibold text-slate-800">{c.name}</p>
                     <p className="text-xs text-slate-400">
                       {count} transaction{count !== 1 ? "s" : ""}
                     </p>
@@ -144,13 +147,13 @@ const Categories = () => {
                         setEditing(c);
                         setModalOpen(true);
                       }}
-                      className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-emerald-600"
+                      className="rounded-lg p-2 text-slate-400 transition hover:bg-emerald-50 hover:text-emerald-600"
                     >
                       <Pencil size={16} />
                     </button>
                     <button
                       onClick={() => setDeleteId(c.id)}
-                      className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-rose-600"
+                      className="rounded-lg p-2 text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"
                     >
                       <Trash2 size={16} />
                     </button>
@@ -175,7 +178,7 @@ const Categories = () => {
         title="Delete category?"
         size="sm"
       >
-        <p className="text-sm text-slate-600">
+        <p className="text-sm leading-relaxed text-slate-600">
           This category cannot be deleted if it has transactions using it.
           You may need to remove or reassign those transactions first.
         </p>

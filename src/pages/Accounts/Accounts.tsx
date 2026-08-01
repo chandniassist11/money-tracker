@@ -80,6 +80,7 @@ const Accounts = () => {
       {accountBalances.length === 0 ? (
         <Card>
           <EmptyState
+            icon={<Wallet size={32} />}
             title="No accounts yet"
             description="Create your first account to start tracking transactions."
             action={
@@ -95,19 +96,19 @@ const Accounts = () => {
           />
         </Card>
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="stagger grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {accountBalances.map((a) => {
             const Icon = typeIcons[a.type] ?? Wallet;
             const typeMeta = ACCOUNT_TYPES.find((t) => t.value === a.type);
             return (
-              <Card key={a.id} className="group relative overflow-hidden">
+              <Card key={a.id} hover className="group relative overflow-hidden p-5">
                 <div
-                  className="absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-10"
+                  className="absolute -right-10 -top-10 h-28 w-28 rounded-full opacity-[0.08] transition-opacity duration-300 group-hover:opacity-[0.15]"
                   style={{ backgroundColor: a.color }}
                 />
-                <div className="flex items-start justify-between">
+                <div className="relative flex items-start justify-between">
                   <div
-                    className="flex h-12 w-12 items-center justify-center rounded-xl"
+                    className="flex h-12 w-12 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110"
                     style={{
                       backgroundColor: `${a.color}1a`,
                       color: a.color,
@@ -121,26 +122,26 @@ const Accounts = () => {
                         setEditing(a);
                         setModalOpen(true);
                       }}
-                      className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-emerald-600"
+                      className="rounded-lg p-2 text-slate-400 transition hover:bg-emerald-50 hover:text-emerald-600"
                     >
                       <Pencil size={16} />
                     </button>
                     <button
                       onClick={() => setDeleteId(a.id)}
-                      className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-rose-600"
+                      className="rounded-lg p-2 text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"
                     >
                       <Trash2 size={16} />
                     </button>
                   </div>
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-slate-800">
+                <h3 className="mt-4 text-lg font-bold text-slate-800">
                   {a.name}
                 </h3>
-                <p className="text-xs text-slate-400">{typeMeta?.label ?? a.type}</p>
-                <div className="mt-4">
-                  <p className="text-xs text-slate-400">Current Balance</p>
+                <p className="text-xs font-medium text-slate-400">{typeMeta?.label ?? a.type}</p>
+                <div className="mt-4 border-t border-slate-100 pt-4">
+                  <p className="text-xs font-medium text-slate-400">Current Balance</p>
                   <p
-                    className={`text-2xl font-bold ${
+                    className={`mt-1 text-2xl font-extrabold tracking-tight ${
                       a.balance < 0 ? "text-rose-600" : "text-slate-800"
                     }`}
                   >
@@ -165,7 +166,7 @@ const Accounts = () => {
         title="Delete account?"
         size="sm"
       >
-        <p className="text-sm text-slate-600">
+        <p className="text-sm leading-relaxed text-slate-600">
           This account cannot be deleted if it has transactions linked to it.
           You may need to remove or reassign those transactions first.
         </p>

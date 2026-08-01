@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Plus, Search, Pencil, Trash2, ArrowUpRight, ArrowDownRight, ListFilter as Filter } from "lucide-react";
+import { Plus, Search, Pencil, Trash2, ArrowUpRight, ArrowDownRight, ListFilter as Filter, Receipt } from "lucide-react";
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
@@ -99,52 +99,55 @@ const Transactions = () => {
         </Button>
       </div>
 
-      <Card>
-        <div className="mb-4 flex flex-wrap items-center gap-3">
-          <div className="min-w-[200px] flex-1">
-            <Input
-              placeholder="Search by note, category, account..."
-              icon={<Search size={16} />}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+      <Card className="overflow-hidden">
+        <div className="border-b border-slate-100 bg-slate-50/50 px-4 py-3 sm:px-5">
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="min-w-[200px] flex-1">
+              <Input
+                placeholder="Search by note, category, account..."
+                icon={<Search size={16} />}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            <div className="w-36">
+              <Select
+                value={typeFilter}
+                onChange={(e) => setTypeFilter(e.target.value)}
+                placeholder="All types"
+                options={[
+                  { value: "income", label: "Income" },
+                  { value: "expense", label: "Expense" },
+                ]}
+              />
+            </div>
+            <div className="w-44">
+              <Select
+                value={categoryFilter}
+                onChange={(e) => setCategoryFilter(e.target.value)}
+                placeholder="All categories"
+                options={categories.map((c) => ({ value: c.id, label: c.name }))}
+              />
+            </div>
+            <div className="w-44">
+              <Select
+                value={accountFilter}
+                onChange={(e) => setAccountFilter(e.target.value)}
+                placeholder="All accounts"
+                options={accounts.map((a) => ({ value: a.id, label: a.name }))}
+              />
+            </div>
+            {hasFilters && (
+              <Button variant="ghost" size="sm" onClick={clearFilters}>
+                <Filter size={16} /> Clear
+              </Button>
+            )}
           </div>
-          <div className="w-36">
-            <Select
-              value={typeFilter}
-              onChange={(e) => setTypeFilter(e.target.value)}
-              placeholder="All types"
-              options={[
-                { value: "income", label: "Income" },
-                { value: "expense", label: "Expense" },
-              ]}
-            />
-          </div>
-          <div className="w-44">
-            <Select
-              value={categoryFilter}
-              onChange={(e) => setCategoryFilter(e.target.value)}
-              placeholder="All categories"
-              options={categories.map((c) => ({ value: c.id, label: c.name }))}
-            />
-          </div>
-          <div className="w-44">
-            <Select
-              value={accountFilter}
-              onChange={(e) => setAccountFilter(e.target.value)}
-              placeholder="All accounts"
-              options={accounts.map((a) => ({ value: a.id, label: a.name }))}
-            />
-          </div>
-          {hasFilters && (
-            <Button variant="ghost" size="sm" onClick={clearFilters}>
-              <Filter size={16} /> Clear
-            </Button>
-          )}
         </div>
 
         {filtered.length === 0 ? (
           <EmptyState
+            icon={<Receipt size={32} />}
             title={hasFilters ? "No matching transactions" : "No transactions yet"}
             description={
               hasFilters
@@ -163,24 +166,24 @@ const Transactions = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-slate-200 text-left text-xs uppercase tracking-wide text-slate-400">
-                  <th className="px-3 py-3 font-medium">Category</th>
-                  <th className="px-3 py-3 font-medium">Account</th>
-                  <th className="px-3 py-3 font-medium">Date</th>
-                  <th className="px-3 py-3 font-medium">Type</th>
-                  <th className="px-3 py-3 text-right font-medium">Amount</th>
-                  <th className="px-3 py-3 text-right font-medium">Actions</th>
+                <tr className="border-b border-slate-100 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
+                  <th className="px-4 py-3.5">Category</th>
+                  <th className="px-4 py-3.5">Account</th>
+                  <th className="px-4 py-3.5">Date</th>
+                  <th className="px-4 py-3.5">Type</th>
+                  <th className="px-4 py-3.5 text-right">Amount</th>
+                  <th className="px-4 py-3.5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-50">
                 {filtered.map((t) => {
                   const Icon = getIcon(t.category?.icon ?? "Wallet");
                   return (
-                    <tr key={t.id} className="group transition hover:bg-slate-50">
-                      <td className="px-3 py-3">
+                    <tr key={t.id} className="group transition-colors hover:bg-slate-50/60">
+                      <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           <div
-                            className="flex h-9 w-9 items-center justify-center rounded-lg"
+                            className="flex h-9 w-9 items-center justify-center rounded-xl transition-transform group-hover:scale-105"
                             style={{
                               backgroundColor: `${t.category?.color ?? "#64748b"}1a`,
                               color: t.category?.color ?? "#64748b",
@@ -189,7 +192,7 @@ const Transactions = () => {
                             <Icon size={16} />
                           </div>
                           <div className="min-w-0">
-                            <p className="font-medium text-slate-800">
+                            <p className="font-semibold text-slate-800">
                               {t.category?.name ?? "Unknown"}
                             </p>
                             {t.note && (
@@ -200,20 +203,20 @@ const Transactions = () => {
                           </div>
                         </div>
                       </td>
-                      <td className="px-3 py-3 text-slate-600">
+                      <td className="px-4 py-3 text-slate-600">
                         {t.account?.name ?? "—"}
                       </td>
-                      <td className="px-3 py-3 text-slate-500">
+                      <td className="px-4 py-3 text-slate-500">
                         {formatShortDate(t.date)}
                       </td>
-                      <td className="px-3 py-3">
+                      <td className="px-4 py-3">
                         <Badge tone={t.type === "income" ? "income" : "expense"}>
                           {t.type}
                         </Badge>
                       </td>
-                      <td className="px-3 py-3 text-right">
+                      <td className="px-4 py-3 text-right">
                         <span
-                          className={`inline-flex items-center gap-1 font-semibold ${
+                          className={`inline-flex items-center gap-1 font-bold ${
                             t.type === "income" ? "text-emerald-600" : "text-rose-600"
                           }`}
                         >
@@ -225,20 +228,20 @@ const Transactions = () => {
                           {formatCurrency(Number(t.amount), cur)}
                         </span>
                       </td>
-                      <td className="px-3 py-3">
+                      <td className="px-4 py-3">
                         <div className="flex justify-end gap-1 opacity-0 transition group-hover:opacity-100">
                           <button
                             onClick={() => {
                               setEditing(t);
                               setModalOpen(true);
                             }}
-                            className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-emerald-600"
+                            className="rounded-lg p-2 text-slate-400 transition hover:bg-emerald-50 hover:text-emerald-600"
                           >
                             <Pencil size={16} />
                           </button>
                           <button
                             onClick={() => setDeleteId(t.id)}
-                            className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-rose-600"
+                            className="rounded-lg p-2 text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"
                           >
                             <Trash2 size={16} />
                           </button>
@@ -265,7 +268,7 @@ const Transactions = () => {
         title="Delete transaction?"
         size="sm"
       >
-        <p className="text-sm text-slate-600">
+        <p className="text-sm leading-relaxed text-slate-600">
           This action cannot be undone. The transaction will be permanently removed.
         </p>
         <div className="mt-6 flex justify-end gap-3">
