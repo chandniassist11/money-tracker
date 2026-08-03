@@ -14,7 +14,7 @@ const Input = ({ label, error, icon, className, id, ...props }: InputProps) => {
       {label && (
         <label
           htmlFor={inputId}
-          className="mb-1.5 block text-sm font-semibold text-slate-700"
+          className="mb-1.5 block text-sm font-bold text-slate-700"
         >
           {label}
         </label>
@@ -28,18 +28,16 @@ const Input = ({ label, error, icon, className, id, ...props }: InputProps) => {
         <input
           id={inputId}
           className={clsx(
-            "w-full rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-2.5 text-slate-900 outline-none transition-all duration-200 placeholder:text-slate-400 hover:border-slate-300 hover:bg-white focus:border-brand-500 focus:bg-white focus:ring-4 focus:ring-brand-500/10",
+            "w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-slate-900 outline-none transition-all duration-200 placeholder:text-slate-400 hover:border-slate-300 hover:bg-white focus:border-primary-500 focus:bg-white focus:ring-4 focus:ring-primary-500/10",
             icon && "pl-10",
-            error && "border-rose-400 focus:border-rose-500 focus:ring-rose-500/10",
+            error && "border-danger-400 focus:border-danger-500 focus:ring-danger-500/10",
             className
           )}
           {...props}
         />
       </div>
       {error && (
-        <p className="mt-1.5 flex items-center gap-1 text-xs font-medium text-rose-500">
-          {error}
-        </p>
+        <p className="mt-1.5 text-xs font-medium text-danger-500">{error}</p>
       )}
     </div>
   );

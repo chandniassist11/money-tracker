@@ -54,7 +54,7 @@ const Categories = () => {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-xl font-bold text-slate-800">Categories</h2>
+          <h2 className="text-xl font-extrabold text-slate-800">Categories</h2>
           <p className="text-sm text-slate-500">Organize your transactions</p>
         </div>
         <Button
@@ -73,9 +73,9 @@ const Categories = () => {
             <div className="inline-flex rounded-xl bg-slate-100 p-1">
               <button
                 onClick={() => setTab("expense")}
-                className={`rounded-lg px-4 py-1.5 text-sm font-semibold transition ${
+                className={`rounded-lg px-4 py-1.5 text-sm font-bold transition ${
                   tab === "expense"
-                    ? "bg-white text-rose-600 shadow-sm"
+                    ? "bg-white text-danger-600 shadow-sm"
                     : "text-slate-500 hover:text-slate-700"
                 }`}
               >
@@ -83,9 +83,9 @@ const Categories = () => {
               </button>
               <button
                 onClick={() => setTab("income")}
-                className={`rounded-lg px-4 py-1.5 text-sm font-semibold transition ${
+                className={`rounded-lg px-4 py-1.5 text-sm font-bold transition ${
                   tab === "income"
-                    ? "bg-white text-brand-600 shadow-sm"
+                    ? "bg-white text-success-600 shadow-sm"
                     : "text-slate-500 hover:text-slate-700"
                 }`}
               >
@@ -127,7 +127,7 @@ const Categories = () => {
               return (
                 <div
                   key={c.id}
-                  className="group flex items-center gap-3 rounded-2xl border border-slate-200/70 p-3.5 transition-all duration-200 hover:border-slate-300 hover:shadow-md hover:shadow-slate-200/50"
+                  className="group flex items-center gap-3 rounded-2xl border border-slate-200/60 p-3.5 transition-all duration-200 hover:border-primary-200 hover:shadow-md hover:shadow-primary-200/30"
                 >
                   <div
                     className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110"
@@ -136,7 +136,7 @@ const Categories = () => {
                     <Icon size={20} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-slate-800">{c.name}</p>
+                    <p className="font-bold text-slate-800">{c.name}</p>
                     <p className="text-xs text-slate-400">
                       {count} transaction{count !== 1 ? "s" : ""}
                     </p>
@@ -147,13 +147,13 @@ const Categories = () => {
                         setEditing(c);
                         setModalOpen(true);
                       }}
-                      className="rounded-lg p-2 text-slate-400 transition hover:bg-brand-50 hover:text-brand-600"
+                      className="rounded-lg p-2 text-slate-400 transition hover:bg-primary-50 hover:text-primary-600"
                     >
                       <Pencil size={16} />
                     </button>
                     <button
                       onClick={() => setDeleteId(c.id)}
-                      className="rounded-lg p-2 text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"
+                      className="rounded-lg p-2 text-slate-400 transition hover:bg-danger-50 hover:text-danger-600"
                     >
                       <Trash2 size={16} />
                     </button>

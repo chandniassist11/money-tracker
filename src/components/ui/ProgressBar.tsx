@@ -30,8 +30,8 @@ const ProgressBar = ({
           "h-full rounded-full transition-all duration-700 ease-out",
           colorClass ??
             (over
-              ? "bg-rose-500"
-              : "bg-gradient-to-r from-brand-400 to-brand-500")
+              ? "bg-danger-500"
+              : "bg-gradient-to-r from-primary-400 to-accent-400")
         )}
         style={{ width: `${pct}%` }}
       />

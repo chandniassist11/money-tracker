@@ -1,17 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import {
-  LayoutDashboard,
-  Receipt,
-  Wallet,
-  Folder,
-  PiggyBank,
-  ChartBar as BarChart3,
-  Settings as SettingsIcon,
-  X,
-  Sparkles,
-  TrendingUp,
-} from "lucide-react";
+import { LayoutDashboard, Receipt, Wallet, Folder, PiggyBank, ChartBar as BarChart3, Settings as SettingsIcon, X, Save as Waves, TrendingUp } from "lucide-react";
 import clsx from "clsx";
 import { useFinanceSelectors } from "../../store/hooks";
 import { useCurrency } from "../../store/useCurrency";
@@ -48,37 +37,33 @@ const Sidebar = ({
     <>
       {open && (
         <div
-          className="fixed inset-0 z-30 animate-fade-in bg-slate-900/60 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-30 animate-fade-in bg-slate-900/30 backdrop-blur-sm lg:hidden"
           onClick={onClose}
         />
       )}
 
       <aside
         className={clsx(
-          "fixed inset-y-0 left-0 z-40 flex w-[264px] transform flex-col bg-slate-900 transition-transform duration-300 lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 flex w-[272px] transform flex-col border-r border-slate-200/80 bg-white transition-transform duration-300 lg:translate-x-0",
           open ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        {/* Ambient glow */}
-        <div className="pointer-events-none absolute -top-20 -right-10 h-48 w-48 rounded-full bg-brand-500/10 blur-3xl" />
-        <div className="pointer-events-none absolute bottom-20 -left-10 h-40 w-40 rounded-full bg-blue-500/5 blur-3xl" />
-
         {/* Brand */}
-        <div className="relative flex items-center gap-3 px-6 py-6">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 shadow-lg shadow-brand-500/30">
-            <Sparkles size={20} />
+        <div className="flex items-center gap-3 px-5 py-6">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 shadow-lg shadow-primary-500/25">
+            <Waves size={22} className="text-white" />
           </div>
           <div className="flex flex-1 items-center justify-between">
             <div>
-              <span className="block text-[15px] font-bold tracking-tight text-white">
+              <span className="block text-[15px] font-extrabold tracking-tight text-slate-800">
                 Money Tracker
               </span>
-              <span className="text-[11px] font-medium text-brand-400">
+              <span className="text-[11px] font-semibold text-primary-500">
                 Personal Finance
               </span>
             </div>
             <button
-              className="rounded-lg p-1 text-slate-400 transition hover:bg-slate-800 lg:hidden"
+              className="rounded-lg p-1 text-slate-400 transition hover:bg-slate-100 lg:hidden"
               onClick={onClose}
             >
               <X size={18} />
@@ -87,24 +72,29 @@ const Sidebar = ({
         </div>
 
         {/* Balance card */}
-        <div className="relative mx-4 mb-4 rounded-2xl border border-slate-800 bg-slate-800/50 p-4">
+        <div className="mx-4 mb-5 overflow-hidden rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 p-4 shadow-lg shadow-primary-500/20">
           <div className="flex items-center justify-between">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-primary-100">
               Net Worth
             </p>
-            <TrendingUp size={14} className="text-brand-400" />
+            <TrendingUp size={15} className="text-primary-200" />
           </div>
-          <p className="mt-1.5 text-xl font-extrabold tracking-tight text-white">
+          <p className="mt-2 text-2xl font-extrabold tracking-tight text-white">
             {formatCurrency(netWorth, cur)}
           </p>
-          <p className="mt-0.5 text-[11px] text-slate-500">
-            Balance: {formatCurrency(totalBalance, cur)}
-          </p>
+          <div className="mt-2 flex items-center gap-1.5 rounded-lg bg-white/10 px-2 py-1">
+            <span className="text-[10px] font-medium text-primary-100">
+              Balance
+            </span>
+            <span className="text-[11px] font-bold text-white">
+              {formatCurrency(totalBalance, cur)}
+            </span>
+          </div>
         </div>
 
         {/* Nav */}
-        <nav className="relative flex-1 space-y-0.5 px-3">
-          <p className="px-3 pb-2 pt-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">
+        <nav className="flex-1 space-y-1 px-3">
+          <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
             Menu
           </p>
           {menuItems.map((item) => {
@@ -116,23 +106,25 @@ const Sidebar = ({
                 onClick={onClose}
                 className={({ isActive }) =>
                   clsx(
-                    "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                    "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all duration-200",
                     isActive
-                      ? "bg-gradient-to-r from-brand-500/20 to-transparent text-white"
-                      : "text-slate-400 hover:bg-slate-800/60 hover:text-slate-200"
+                      ? "bg-primary-50 text-primary-700"
+                      : "text-slate-500 hover:bg-slate-50 hover:text-slate-700"
                   )
                 }
               >
                 {({ isActive }) => (
                   <>
                     {isActive && (
-                      <span className="absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full bg-brand-400" />
+                      <span className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-primary-500" />
                     )}
                     <Icon
                       size={18}
                       className={clsx(
                         "transition-transform duration-200 group-hover:scale-110",
-                        isActive ? "text-brand-400" : "text-slate-500 group-hover:text-slate-300"
+                        isActive
+                          ? "text-primary-500"
+                          : "text-slate-400 group-hover:text-slate-600"
                       )}
                     />
                     {item.name}
@@ -144,12 +136,12 @@ const Sidebar = ({
         </nav>
 
         {/* Footer */}
-        <div className="relative px-4 pb-5 pt-3">
-          <div className="rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-800/80 to-slate-900 p-4">
-            <p className="text-xs font-semibold text-slate-300">
+        <div className="px-4 pb-5 pt-3">
+          <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
+            <p className="text-xs font-bold text-slate-700">
               Track. Budget. Save.
             </p>
-            <p className="mt-1 text-[11px] leading-relaxed text-slate-500">
+            <p className="mt-1 text-[11px] leading-relaxed text-slate-400">
               Your financial data stays on this device.
             </p>
           </div>

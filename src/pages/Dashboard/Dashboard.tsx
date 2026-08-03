@@ -1,13 +1,4 @@
-import {
-  Wallet,
-  TrendingUp,
-  TrendingDown,
-  PiggyBank,
-  ArrowUpRight,
-  ArrowDownRight,
-  Plus,
-  Sparkles,
-} from "lucide-react";
+import { Wallet, TrendingUp, TrendingDown, PiggyBank, ArrowUpRight, ArrowDownRight, Plus, Save as Waves } from "lucide-react";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -65,24 +56,24 @@ const Dashboard = () => {
   return (
     <div className="space-y-6">
       {/* Hero */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-800 via-slate-900 to-brand-950 p-6 sm:p-8">
-        <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-brand-500/15 blur-3xl animate-pulse-glow" />
-        <div className="absolute -bottom-12 left-1/3 h-48 w-48 rounded-full bg-blue-500/10 blur-3xl" />
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-500 via-primary-600 to-primary-800 p-6 sm:p-8">
+        <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-accent-400/20 blur-3xl animate-float" />
+        <div className="absolute -bottom-12 left-1/3 h-48 w-48 rounded-full bg-white/10 blur-3xl" />
         <div className="relative flex flex-wrap items-center justify-between gap-4">
           <div>
-            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-brand-300 ring-1 ring-white/10">
-              <Sparkles size={13} /> {greeting}
+            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-bold text-white ring-1 ring-white/20">
+              <Waves size={13} /> {greeting}
             </div>
             <h2 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
               {formatCurrency(totalBalance, cur)}
             </h2>
-            <p className="mt-1 text-sm text-slate-300">
+            <p className="mt-1 text-sm font-medium text-primary-100">
               Your total balance across all accounts
             </p>
           </div>
           <Button
             onClick={() => navigate("/transactions?new=1")}
-            className="bg-white text-slate-800 shadow-lg hover:bg-slate-100 hover:shadow-xl"
+            className="bg-white text-primary-700 shadow-lg shadow-primary-900/20 hover:bg-primary-50 hover:shadow-xl"
           >
             <Plus size={18} /> Add Transaction
           </Button>
@@ -95,7 +86,7 @@ const Dashboard = () => {
           title="Total Income"
           value={formatCurrency(totalIncome, cur)}
           icon={<TrendingUp size={22} />}
-          tone="emerald"
+          tone="teal"
           subtitle="All time"
         />
         <StatCard
@@ -126,15 +117,15 @@ const Dashboard = () => {
         <Card className="lg:col-span-2">
           <div className="mb-4 flex items-center justify-between border-b border-slate-100 px-5 py-4">
             <div>
-              <h3 className="font-bold text-slate-800">Income vs Expense</h3>
+              <h3 className="font-extrabold text-slate-800">Income vs Expense</h3>
               <p className="text-xs text-slate-400">Last 6 months</p>
             </div>
-            <div className="flex items-center gap-3 text-xs font-medium">
+            <div className="flex items-center gap-3 text-xs font-bold">
               <span className="flex items-center gap-1.5 text-slate-500">
-                <span className="h-2.5 w-2.5 rounded-full bg-brand-500" /> Income
+                <span className="h-2.5 w-2.5 rounded-full bg-primary-500" /> Income
               </span>
               <span className="flex items-center gap-1.5 text-slate-500">
-                <span className="h-2.5 w-2.5 rounded-full bg-rose-500" /> Expense
+                <span className="h-2.5 w-2.5 rounded-full bg-danger-500" /> Expense
               </span>
             </div>
           </div>
@@ -149,12 +140,12 @@ const Dashboard = () => {
                 <AreaChart data={areaData}>
                   <defs>
                     <linearGradient id="gInc" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#10b981" stopOpacity={0.35} />
-                      <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
+                      <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.35} />
+                      <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
                     </linearGradient>
                     <linearGradient id="gExp" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#f43f5e" stopOpacity={0.35} />
-                      <stop offset="100%" stopColor="#f43f5e" stopOpacity={0} />
+                      <stop offset="0%" stopColor="#ef4444" stopOpacity={0.35} />
+                      <stop offset="100%" stopColor="#ef4444" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid {...chartGridProps} />
@@ -167,20 +158,20 @@ const Dashboard = () => {
                   <Area
                     type="monotone"
                     dataKey="Income"
-                    stroke="#10b981"
+                    stroke="#3b82f6"
                     strokeWidth={2.5}
                     fill="url(#gInc)"
                     dot={false}
-                    activeDot={{ r: 5, fill: "#10b981", strokeWidth: 2, stroke: "#fff" }}
+                    activeDot={{ r: 5, fill: "#3b82f6", strokeWidth: 2, stroke: "#fff" }}
                   />
                   <Area
                     type="monotone"
                     dataKey="Expense"
-                    stroke="#f43f5e"
+                    stroke="#ef4444"
                     strokeWidth={2.5}
                     fill="url(#gExp)"
                     dot={false}
-                    activeDot={{ r: 5, fill: "#f43f5e", strokeWidth: 2, stroke: "#fff" }}
+                    activeDot={{ r: 5, fill: "#ef4444", strokeWidth: 2, stroke: "#fff" }}
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -190,7 +181,7 @@ const Dashboard = () => {
 
         <Card>
           <div className="mb-4 border-b border-slate-100 px-5 py-4">
-            <h3 className="font-bold text-slate-800">Spending by Category</h3>
+            <h3 className="font-extrabold text-slate-800">Spending by Category</h3>
             <p className="text-xs text-slate-400">This month</p>
           </div>
           <div className="px-3 pb-4 pt-2">
@@ -235,7 +226,7 @@ const Dashboard = () => {
       <Card className="overflow-hidden">
         <div className="mb-4 flex items-center justify-between border-b border-slate-100 px-5 py-4">
           <div>
-            <h3 className="font-bold text-slate-800">Recent Transactions</h3>
+            <h3 className="font-extrabold text-slate-800">Recent Transactions</h3>
             <p className="text-xs text-slate-400">Your latest activity</p>
           </div>
           <Button variant="ghost" size="sm" onClick={() => navigate("/transactions")}>
@@ -273,7 +264,7 @@ const Dashboard = () => {
                       <Icon size={18} />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-semibold text-slate-800">
+                      <p className="truncate text-sm font-bold text-slate-800">
                         {t.category?.name ?? "Unknown"}
                       </p>
                       <p className="truncate text-xs text-slate-400">
@@ -282,8 +273,8 @@ const Dashboard = () => {
                     </div>
                     <div className="text-right">
                       <p
-                        className={`text-sm font-bold ${
-                          isIncome ? "text-brand-600" : "text-rose-600"
+                        className={`text-sm font-extrabold ${
+                          isIncome ? "text-success-600" : "text-danger-600"
                         }`}
                       >
                         {isIncome ? "+" : "-"}
@@ -295,13 +286,13 @@ const Dashboard = () => {
                     </div>
                     <div
                       className={`flex h-7 w-7 items-center justify-center rounded-full ${
-                        isIncome ? "bg-brand-50" : "bg-rose-50"
+                        isIncome ? "bg-success-500/10" : "bg-danger-500/10"
                       }`}
                     >
                       {isIncome ? (
-                        <ArrowUpRight size={14} className="text-brand-500" />
+                        <ArrowUpRight size={14} className="text-success-600" />
                       ) : (
-                        <ArrowDownRight size={14} className="text-rose-500" />
+                        <ArrowDownRight size={14} className="text-danger-600" />
                       )}
                     </div>
                   </div>

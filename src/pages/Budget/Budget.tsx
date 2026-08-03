@@ -92,11 +92,11 @@ const BudgetPage = () => {
             <ChevronLeft size={18} />
           </button>
           <div className="min-w-[160px] text-center">
-            <h2 className="text-xl font-bold text-slate-800">{formatMonth(month)}</h2>
+            <h2 className="text-xl font-extrabold text-slate-800">{formatMonth(month)}</h2>
             {!isCurrentMonth && (
               <button
                 onClick={() => setMonth(currentMonth())}
-                className="text-xs font-semibold text-brand-600 hover:text-brand-700"
+                className="text-xs font-bold text-primary-600 hover:text-primary-700"
               >
                 Back to today
               </button>
@@ -123,11 +123,11 @@ const BudgetPage = () => {
       <div className="stagger grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card hover className="p-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-50 text-primary-600">
               <Target size={20} />
             </div>
             <div>
-              <p className="text-sm font-medium text-slate-500">Total Budget</p>
+              <p className="text-sm font-bold text-slate-500">Total Budget</p>
               <p className="text-2xl font-extrabold tracking-tight text-slate-800">
                 {formatCurrency(totalBudget, cur)}
               </p>
@@ -136,12 +136,12 @@ const BudgetPage = () => {
         </Card>
         <Card hover className="p-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 text-rose-600">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-danger-500/10 text-danger-600">
               <TrendingDown size={20} />
             </div>
             <div>
-              <p className="text-sm font-medium text-slate-500">Spent</p>
-              <p className="text-2xl font-extrabold tracking-tight text-rose-600">
+              <p className="text-sm font-bold text-slate-500">Spent</p>
+              <p className="text-2xl font-extrabold tracking-tight text-danger-600">
                 {formatCurrency(totalSpent, cur)}
               </p>
             </div>
@@ -149,12 +149,12 @@ const BudgetPage = () => {
         </Card>
         <Card hover className="p-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success-500/10 text-success-600">
               <PiggyBank size={20} />
             </div>
             <div>
-              <p className="text-sm font-medium text-slate-500">Remaining</p>
-              <p className="text-2xl font-extrabold tracking-tight text-brand-600">
+              <p className="text-sm font-bold text-slate-500">Remaining</p>
+              <p className="text-2xl font-extrabold tracking-tight text-success-600">
                 {formatCurrency(totalLeft, cur)}
               </p>
             </div>
@@ -165,7 +165,7 @@ const BudgetPage = () => {
       <Card className="p-5">
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <h3 className="font-bold text-slate-800">Overall Progress</h3>
+            <h3 className="font-extrabold text-slate-800">Overall Progress</h3>
             <p className="text-xs text-slate-400">Across all category budgets</p>
           </div>
           <Badge tone={overallPct >= 100 ? "expense" : overallPct >= 80 ? "warning" : "neutral"}>
@@ -178,7 +178,7 @@ const BudgetPage = () => {
       {/* Per-category budgets */}
       <Card className="p-5">
         <div className="mb-4">
-          <h3 className="font-bold text-slate-800">Category Budgets</h3>
+          <h3 className="font-extrabold text-slate-800">Category Budgets</h3>
           <p className="text-xs text-slate-400">Spending limits for {formatMonth(month)}</p>
         </div>
         {monthBudgets.length === 0 ? (
@@ -211,7 +211,7 @@ const BudgetPage = () => {
               return (
                 <div
                   key={b.id}
-                  className="group rounded-2xl border border-slate-200/70 p-4 transition-all duration-200 hover:border-slate-300 hover:shadow-md hover:shadow-slate-200/50"
+                  className="group rounded-2xl border border-slate-200/60 p-4 transition-all duration-200 hover:border-primary-200 hover:shadow-md hover:shadow-primary-200/30"
                 >
                   <div className="flex items-center gap-3">
                     <div
@@ -224,7 +224,7 @@ const BudgetPage = () => {
                       <Icon size={18} />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="font-semibold text-slate-800">
+                      <p className="font-bold text-slate-800">
                         {category?.name ?? "Unknown"}
                       </p>
                       <p className="text-xs text-slate-400">
@@ -233,8 +233,8 @@ const BudgetPage = () => {
                     </div>
                     <div className="flex items-center gap-2">
                       <span
-                        className={`text-sm font-bold ${
-                          over ? "text-rose-600" : "text-slate-700"
+                        className={`text-sm font-extrabold ${
+                          over ? "text-danger-600" : "text-slate-700"
                         }`}
                       >
                         {pct}%
@@ -245,13 +245,13 @@ const BudgetPage = () => {
                             setEditing(b);
                             setModalOpen(true);
                           }}
-                          className="rounded-lg p-1.5 text-slate-400 transition hover:bg-brand-50 hover:text-brand-600"
+                          className="rounded-lg p-1.5 text-slate-400 transition hover:bg-primary-50 hover:text-primary-600"
                         >
                           <Pencil size={15} />
                         </button>
                         <button
                           onClick={() => setDeleteId(b.id)}
-                          className="rounded-lg p-1.5 text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"
+                          className="rounded-lg p-1.5 text-slate-400 transition hover:bg-danger-50 hover:text-danger-600"
                         >
                           <Trash2 size={15} />
                         </button>
@@ -262,10 +262,10 @@ const BudgetPage = () => {
                     value={spent}
                     max={Number(b.amount)}
                     className="mt-3"
-                    colorClass={over ? "bg-rose-500" : "bg-gradient-to-r from-brand-400 to-brand-500"}
+                    colorClass={over ? "bg-danger-500" : "bg-gradient-to-r from-primary-400 to-accent-400"}
                   />
                   {over && (
-                    <p className="mt-2 text-xs font-medium text-rose-500">
+                    <p className="mt-2 text-xs font-bold text-danger-500">
                       Over budget by {formatCurrency(spent - Number(b.amount), cur)}
                     </p>
                   )}

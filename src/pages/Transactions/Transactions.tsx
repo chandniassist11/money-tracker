@@ -98,7 +98,7 @@ const Transactions = () => {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-xl font-bold text-slate-800">Transactions</h2>
+          <h2 className="text-xl font-extrabold text-slate-800">Transactions</h2>
           <p className="text-sm text-slate-500">
             {filtered.length} of {transactions.length} transactions
           </p>
@@ -175,7 +175,7 @@ const Transactions = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-slate-100 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
+                <tr className="border-b border-slate-100 text-left text-xs font-bold uppercase tracking-wider text-slate-400">
                   <th className="px-4 py-3.5">Category</th>
                   <th className="px-4 py-3.5">Account</th>
                   <th className="px-4 py-3.5">Date</th>
@@ -201,7 +201,7 @@ const Transactions = () => {
                             <Icon size={16} />
                           </div>
                           <div className="min-w-0">
-                            <p className="font-semibold text-slate-800">
+                            <p className="font-bold text-slate-800">
                               {t.category?.name ?? "Unknown"}
                             </p>
                             {t.note && (
@@ -225,8 +225,8 @@ const Transactions = () => {
                       </td>
                       <td className="px-4 py-3 text-right">
                         <span
-                          className={`inline-flex items-center gap-1 font-bold ${
-                            t.type === "income" ? "text-brand-600" : "text-rose-600"
+                          className={`inline-flex items-center gap-1 font-extrabold ${
+                            t.type === "income" ? "text-success-600" : "text-danger-600"
                           }`}
                         >
                           {t.type === "income" ? (
@@ -244,13 +244,13 @@ const Transactions = () => {
                               setEditing(t);
                               setModalOpen(true);
                             }}
-                            className="rounded-lg p-2 text-slate-400 transition hover:bg-brand-50 hover:text-brand-600"
+                            className="rounded-lg p-2 text-slate-400 transition hover:bg-primary-50 hover:text-primary-600"
                           >
                             <Pencil size={16} />
                           </button>
                           <button
                             onClick={() => setDeleteId(t.id)}
-                            className="rounded-lg p-2 text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"
+                            className="rounded-lg p-2 text-slate-400 transition hover:bg-danger-50 hover:text-danger-600"
                           >
                             <Trash2 size={16} />
                           </button>

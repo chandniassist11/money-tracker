@@ -6,12 +6,12 @@ const NotFound = () => {
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center text-center animate-fade-in">
       <div className="relative">
-        <div className="absolute inset-0 animate-pulse rounded-full bg-emerald-500/10 blur-2xl" />
-        <div className="relative rounded-3xl bg-gradient-to-br from-slate-100 to-slate-200/50 p-5 text-slate-400 ring-1 ring-slate-200/60">
+        <div className="absolute inset-0 animate-pulse rounded-full bg-primary-500/10 blur-2xl" />
+        <div className="relative rounded-3xl bg-gradient-to-br from-primary-50 to-accent-500/10 p-5 text-primary-400 ring-1 ring-primary-100">
           <Compass size={48} />
         </div>
       </div>
-      <h1 className="mt-6 bg-gradient-to-br from-slate-700 to-slate-900 bg-clip-text text-7xl font-extrabold text-transparent">
+      <h1 className="mt-6 bg-gradient-to-br from-primary-500 to-primary-800 bg-clip-text text-7xl font-extrabold text-transparent">
         404
       </h1>
       <p className="mt-2 text-lg font-bold text-slate-700">Page not found</p>

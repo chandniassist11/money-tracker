@@ -94,9 +94,9 @@ const TransactionFormModal = ({
               setValue("type", "expense");
               setValue("category_id", "");
             }}
-            className={`rounded-xl border px-4 py-3 text-sm font-semibold transition ${
+            className={`rounded-xl border px-4 py-3 text-sm font-bold transition ${
               type === "expense"
-                ? "border-rose-400 bg-rose-50 text-rose-600 ring-2 ring-rose-200/40"
+                ? "border-danger-400 bg-danger-500/10 text-danger-600 ring-2 ring-danger-500/20"
                 : "border-slate-200 text-slate-500 hover:border-slate-300"
             }`}
           >
@@ -108,9 +108,9 @@ const TransactionFormModal = ({
               setValue("type", "income");
               setValue("category_id", "");
             }}
-            className={`rounded-xl border px-4 py-3 text-sm font-semibold transition ${
+            className={`rounded-xl border px-4 py-3 text-sm font-bold transition ${
               type === "income"
-                ? "border-brand-400 bg-brand-50 text-brand-600 ring-2 ring-brand-200/40"
+                ? "border-success-400 bg-success-500/10 text-success-600 ring-2 ring-success-500/20"
                 : "border-slate-200 text-slate-500 hover:border-slate-300"
             }`}
           >

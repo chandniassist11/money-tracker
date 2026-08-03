@@ -62,7 +62,7 @@ const Accounts = () => {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-xl font-bold text-slate-800">Accounts</h2>
+          <h2 className="text-xl font-extrabold text-slate-800">Accounts</h2>
           <p className="text-sm text-slate-500">
             Total balance: {formatCurrency(totalBalance, cur)}
           </p>
@@ -122,27 +122,27 @@ const Accounts = () => {
                         setEditing(a);
                         setModalOpen(true);
                       }}
-                      className="rounded-lg p-2 text-slate-400 transition hover:bg-brand-50 hover:text-brand-600"
+                      className="rounded-lg p-2 text-slate-400 transition hover:bg-primary-50 hover:text-primary-600"
                     >
                       <Pencil size={16} />
                     </button>
                     <button
                       onClick={() => setDeleteId(a.id)}
-                      className="rounded-lg p-2 text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"
+                      className="rounded-lg p-2 text-slate-400 transition hover:bg-danger-50 hover:text-danger-600"
                     >
                       <Trash2 size={16} />
                     </button>
                   </div>
                 </div>
-                <h3 className="mt-4 text-lg font-bold text-slate-800">
+                <h3 className="mt-4 text-lg font-extrabold text-slate-800">
                   {a.name}
                 </h3>
-                <p className="text-xs font-medium text-slate-400">{typeMeta?.label ?? a.type}</p>
+                <p className="text-xs font-bold text-slate-400">{typeMeta?.label ?? a.type}</p>
                 <div className="mt-4 border-t border-slate-100 pt-4">
                   <p className="text-xs font-medium text-slate-400">Current Balance</p>
                   <p
                     className={`mt-1 text-2xl font-extrabold tracking-tight ${
-                      a.balance < 0 ? "text-rose-600" : "text-slate-800"
+                      a.balance < 0 ? "text-danger-600" : "text-slate-800"
                     }`}
                   >
                     {formatCurrency(a.balance, cur)}

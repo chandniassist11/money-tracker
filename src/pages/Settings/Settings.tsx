@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Save, User, Coins, PiggyBank, Info, Sparkles } from "lucide-react";
+import { Save, User, Coins, PiggyBank, Info, Save as Waves } from "lucide-react";
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
@@ -46,7 +46,7 @@ const Settings = () => {
   return (
     <div className="mx-auto max-w-3xl space-y-6">
       <div>
-        <h2 className="text-xl font-bold text-slate-800">Settings</h2>
+        <h2 className="text-xl font-extrabold text-slate-800">Settings</h2>
         <p className="text-sm text-slate-500">Manage your preferences</p>
       </div>
 
@@ -54,11 +54,11 @@ const Settings = () => {
         {/* Profile */}
         <Card className="p-5">
           <div className="mb-5 flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-400 to-brand-600 text-white shadow-lg shadow-brand-500/25">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-400 to-accent-500 text-white shadow-lg shadow-primary-500/20">
               <User size={22} />
             </div>
             <div>
-              <h3 className="font-bold text-slate-800">Profile</h3>
+              <h3 className="font-extrabold text-slate-800">Profile</h3>
               <p className="text-sm text-slate-500">Personal information</p>
             </div>
           </div>
@@ -77,11 +77,11 @@ const Settings = () => {
         {/* Currency */}
         <Card className="p-5">
           <div className="mb-5 flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-lg shadow-blue-500/25">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-400 to-primary-600 text-white shadow-lg shadow-primary-500/20">
               <Coins size={22} />
             </div>
             <div>
-              <h3 className="font-bold text-slate-800">Currency</h3>
+              <h3 className="font-extrabold text-slate-800">Currency</h3>
               <p className="text-sm text-slate-500">Select your display currency</p>
             </div>
           </div>
@@ -109,11 +109,11 @@ const Settings = () => {
         {/* Default monthly budget */}
         <Card className="p-5">
           <div className="mb-5 flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-white shadow-lg shadow-amber-500/25">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-warning-400 to-warning-600 text-white shadow-lg shadow-warning-500/20">
               <PiggyBank size={22} />
             </div>
             <div>
-              <h3 className="font-bold text-slate-800">Default Monthly Budget</h3>
+              <h3 className="font-extrabold text-slate-800">Default Monthly Budget</h3>
               <p className="text-sm text-slate-500">
                 Used as fallback when no category budgets are set for {formatMonth(currentMonth())}
               </p>
@@ -140,32 +140,32 @@ const Settings = () => {
         {/* Financial summary */}
         <Card className="p-5">
           <div className="mb-5 flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-600 to-slate-800 text-white shadow-lg shadow-slate-500/25">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-600 to-slate-800 text-white shadow-lg shadow-slate-500/20">
               <Info size={22} />
             </div>
             <div>
-              <h3 className="font-bold text-slate-800">Financial Summary</h3>
+              <h3 className="font-extrabold text-slate-800">Financial Summary</h3>
               <p className="text-sm text-slate-500">All-time totals</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-            <div className="rounded-xl bg-brand-50/50 p-3.5">
-              <p className="text-xs font-medium text-slate-400">Total Income</p>
-              <p className="mt-1 text-lg font-extrabold text-brand-600">
+            <div className="rounded-xl bg-success-500/10 p-3.5">
+              <p className="text-xs font-bold text-slate-400">Total Income</p>
+              <p className="mt-1 text-lg font-extrabold text-success-600">
                 {formatCurrency(totalIncome, settings.currency)}
               </p>
             </div>
-            <div className="rounded-xl bg-rose-50/50 p-3.5">
-              <p className="text-xs font-medium text-slate-400">Total Expense</p>
-              <p className="mt-1 text-lg font-extrabold text-rose-600">
+            <div className="rounded-xl bg-danger-500/10 p-3.5">
+              <p className="text-xs font-bold text-slate-400">Total Expense</p>
+              <p className="mt-1 text-lg font-extrabold text-danger-600">
                 {formatCurrency(totalExpense, settings.currency)}
               </p>
             </div>
             <div className="rounded-xl bg-slate-50 p-3.5">
-              <p className="text-xs font-medium text-slate-400">Net</p>
+              <p className="text-xs font-bold text-slate-400">Net</p>
               <p
                 className={`mt-1 text-lg font-extrabold ${
-                  totalIncome - totalExpense >= 0 ? "text-brand-600" : "text-rose-600"
+                  totalIncome - totalExpense >= 0 ? "text-success-600" : "text-danger-600"
                 }`}
               >
                 {formatCurrency(totalIncome - totalExpense, settings.currency)}
@@ -178,16 +178,16 @@ const Settings = () => {
         <Card className="p-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 text-white shadow-md shadow-brand-500/25">
-                <Sparkles size={18} />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-400 to-accent-500 text-white shadow-md shadow-primary-500/20">
+                <Waves size={18} />
               </div>
               <div>
-                <p className="font-bold text-slate-800">{APP_NAME}</p>
+                <p className="font-extrabold text-slate-800">{APP_NAME}</p>
                 <p className="text-sm text-slate-500">Version {APP_VERSION}</p>
               </div>
             </div>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700 ring-1 ring-brand-200/60">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-500" /> Active
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-success-500/10 px-3 py-1 text-xs font-bold text-success-600 ring-1 ring-success-500/20">
+              <span className="h-1.5 w-1.5 rounded-full bg-success-500" /> Active
             </span>
           </div>
         </Card>

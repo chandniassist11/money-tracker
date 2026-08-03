@@ -42,7 +42,7 @@ const AccountFormModal = ({ open, onClose, editing }: AccountFormModalProps) => 
         name: editing?.name ?? "",
         type: editing?.type ?? "cash",
         initial_balance: editing ? String(editing.initial_balance) : "0",
-        color: editing?.color ?? "#10b981",
+        color: editing?.color ?? "#2563eb",
       });
     }
   }, [open, editing, reset]);
@@ -100,7 +100,7 @@ const AccountFormModal = ({ open, onClose, editing }: AccountFormModalProps) => 
         />
 
         <div>
-          <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+          <label className="mb-1.5 block text-sm font-bold text-slate-700">
             Color
           </label>
           <div className="flex flex-wrap gap-2">

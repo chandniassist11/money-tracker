@@ -11,28 +11,28 @@ export const CURRENCIES: Currency[] = [
 ];
 
 export const ACCOUNT_TYPES = [
-  { value: "cash", label: "Cash", color: "#10b981" },
-  { value: "bank", label: "Bank Account", color: "#3b82f6" },
-  { value: "credit_card", label: "Credit Card", color: "#f43f5e" },
-  { value: "upi", label: "UPI", color: "#a855f7" },
-  { value: "wallet", label: "Digital Wallet", color: "#f97316" },
+  { value: "cash", label: "Cash", color: "#0d9488" },
+  { value: "bank", label: "Bank Account", color: "#2563eb" },
+  { value: "credit_card", label: "Credit Card", color: "#dc2626" },
+  { value: "upi", label: "UPI", color: "#7c3aed" },
+  { value: "wallet", label: "Digital Wallet", color: "#ea580c" },
 ] as const;
 
 export const CATEGORY_COLORS = [
-  "#10b981",
-  "#06b6d4",
-  "#0ea5e9",
-  "#14b8a6",
-  "#3b82f6",
-  "#6366f1",
-  "#a855f7",
-  "#ec4899",
+  "#2563eb",
+  "#0d9488",
+  "#7c3aed",
+  "#dc2626",
+  "#ea580c",
+  "#d97706",
+  "#16a34a",
+  "#0891b2",
+  "#4f46e5",
+  "#db2777",
+  "#9333ea",
+  "#059669",
+  "#ca8a04",
   "#f43f5e",
-  "#ef4444",
-  "#f97316",
-  "#eab308",
-  "#84cc16",
-  "#22c55e",
   "#64748b",
 ];
 

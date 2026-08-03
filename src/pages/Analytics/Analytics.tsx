@@ -64,7 +64,7 @@ const Analytics = () => {
           map[t.category_id] = {
             name: t.category?.name ?? "Unknown",
             value: 0,
-            color: t.category?.color ?? "#10b981",
+            color: t.category?.color ?? "#0d9488",
           };
         }
         map[t.category_id].value += Number(t.amount);
@@ -90,7 +90,7 @@ const Analytics = () => {
         spent,
         budget: Number(b.amount),
         pct: Math.min(100, pct),
-        fill: cat?.color ?? "#10b981",
+        fill: cat?.color ?? "#3b82f6",
       };
     });
   }, [budgets, transactions, month]);
@@ -107,7 +107,7 @@ const Analytics = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-bold text-slate-800">Analytics</h2>
+        <h2 className="text-xl font-extrabold text-slate-800">Analytics</h2>
         <p className="text-sm text-slate-500">Insights into your financial activity</p>
       </div>
 
@@ -117,7 +117,7 @@ const Analytics = () => {
           title="Total Income"
           value={formatCurrency(totalIncome, cur)}
           icon={<TrendingUp size={22} />}
-          tone="emerald"
+          tone="teal"
         />
         <StatCard
           title="Total Expense"
@@ -129,7 +129,7 @@ const Analytics = () => {
           title="Net Savings"
           value={formatCurrency(netSavings, cur)}
           icon={<Scale size={22} />}
-          tone={netSavings >= 0 ? "emerald" : "rose"}
+          tone={netSavings >= 0 ? "teal" : "rose"}
           subtitle={`${savingsRate}% savings rate`}
         />
         <StatCard
@@ -144,7 +144,7 @@ const Analytics = () => {
       <Card>
         <div className="mb-4 flex items-center justify-between border-b border-slate-100 px-5 py-4">
           <div>
-            <h3 className="font-bold text-slate-800">Cash Flow Analysis</h3>
+            <h3 className="font-extrabold text-slate-800">Cash Flow Analysis</h3>
             <p className="text-xs text-slate-400">Monthly comparison</p>
           </div>
         </div>
@@ -159,8 +159,8 @@ const Analytics = () => {
                 <YAxis {...chartAxisProps} />
                 <Tooltip formatter={(v) => formatCurrency(Number(v), cur)} contentStyle={chartTooltipStyle} />
                 <Legend wrapperStyle={{ fontSize: 12 }} iconType="circle" iconSize={8} />
-                <Bar dataKey="Income" fill="#10b981" radius={[6, 6, 0, 0]} />
-                <Bar dataKey="Expense" fill="#f43f5e" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="Income" fill="#3b82f6" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="Expense" fill="#ef4444" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -171,7 +171,7 @@ const Analytics = () => {
         {/* Expense by category */}
         <Card>
           <div className="mb-4 border-b border-slate-100 px-5 py-4">
-            <h3 className="font-bold text-slate-800">Expense Breakdown</h3>
+            <h3 className="font-extrabold text-slate-800">Expense Breakdown</h3>
             <p className="text-xs text-slate-400">By category, this month</p>
           </div>
           <div className="px-3 pb-4 pt-2">
@@ -204,7 +204,7 @@ const Analytics = () => {
         {/* Income by category */}
         <Card>
           <div className="mb-4 border-b border-slate-100 px-5 py-4">
-            <h3 className="font-bold text-slate-800">Income Sources</h3>
+            <h3 className="font-extrabold text-slate-800">Income Sources</h3>
             <p className="text-xs text-slate-400">By category, all time</p>
           </div>
           <div className="px-3 pb-4 pt-2">
@@ -238,7 +238,7 @@ const Analytics = () => {
       {/* Net savings trend */}
       <Card>
         <div className="mb-4 border-b border-slate-100 px-5 py-4">
-          <h3 className="font-bold text-slate-800">Monthly Net Savings Trend</h3>
+          <h3 className="font-extrabold text-slate-800">Monthly Net Savings Trend</h3>
           <p className="text-xs text-slate-400">Income minus expense</p>
         </div>
         <div className="px-3 pb-4 pt-2">
@@ -254,10 +254,10 @@ const Analytics = () => {
                 <Line
                   type="monotone"
                   dataKey="Net"
-                  stroke="#10b981"
+                  stroke="#3b82f6"
                   strokeWidth={3}
-                  dot={{ r: 4, fill: "#10b981" }}
-                  activeDot={{ r: 6, fill: "#10b981", strokeWidth: 2, stroke: "#fff" }}
+                  dot={{ r: 4, fill: "#3b82f6" }}
+                  activeDot={{ r: 6, fill: "#3b82f6", strokeWidth: 2, stroke: "#fff" }}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -269,7 +269,7 @@ const Analytics = () => {
         {/* Budget utilization radial */}
         <Card>
           <div className="mb-4 border-b border-slate-100 px-5 py-4">
-            <h3 className="font-bold text-slate-800">Budget Utilization</h3>
+            <h3 className="font-extrabold text-slate-800">Budget Utilization</h3>
             <p className="text-xs text-slate-400">This month</p>
           </div>
           <div className="px-3 pb-4 pt-2">
@@ -309,7 +309,7 @@ const Analytics = () => {
         {/* Account distribution */}
         <Card>
           <div className="mb-4 border-b border-slate-100 px-5 py-4">
-            <h3 className="font-bold text-slate-800">Account Distribution</h3>
+            <h3 className="font-extrabold text-slate-800">Account Distribution</h3>
             <p className="text-xs text-slate-400">By balance</p>
           </div>
           <div className="px-3 pb-4 pt-2">
