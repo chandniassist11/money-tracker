@@ -65,12 +65,12 @@ const Dashboard = () => {
   return (
     <div className="space-y-6">
       {/* Hero */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-800 via-slate-900 to-emerald-950 p-6 sm:p-8">
-        <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-emerald-500/10 blur-3xl" />
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-800 via-slate-900 to-brand-950 p-6 sm:p-8">
+        <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-brand-500/15 blur-3xl animate-pulse-glow" />
         <div className="absolute -bottom-12 left-1/3 h-48 w-48 rounded-full bg-blue-500/10 blur-3xl" />
         <div className="relative flex flex-wrap items-center justify-between gap-4">
           <div>
-            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-emerald-300 ring-1 ring-white/10">
+            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-brand-300 ring-1 ring-white/10">
               <Sparkles size={13} /> {greeting}
             </div>
             <h2 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
@@ -124,112 +124,116 @@ const Dashboard = () => {
       {/* Charts */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-2">
-          <div className="mb-4 flex items-center justify-between">
+          <div className="mb-4 flex items-center justify-between border-b border-slate-100 px-5 py-4">
             <div>
               <h3 className="font-bold text-slate-800">Income vs Expense</h3>
               <p className="text-xs text-slate-400">Last 6 months</p>
             </div>
             <div className="flex items-center gap-3 text-xs font-medium">
               <span className="flex items-center gap-1.5 text-slate-500">
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" /> Income
+                <span className="h-2.5 w-2.5 rounded-full bg-brand-500" /> Income
               </span>
               <span className="flex items-center gap-1.5 text-slate-500">
                 <span className="h-2.5 w-2.5 rounded-full bg-rose-500" /> Expense
               </span>
             </div>
           </div>
-          {areaData.every((d) => d.Income === 0 && d.Expense === 0) ? (
-            <EmptyState
-              title="No data yet"
-              description="Add transactions to see your income vs expense trend."
-            />
-          ) : (
-            <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={areaData}>
-                <defs>
-                  <linearGradient id="gInc" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#10b981" stopOpacity={0.35} />
-                    <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="gExp" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#f43f5e" stopOpacity={0.35} />
-                    <stop offset="100%" stopColor="#f43f5e" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid {...chartGridProps} />
-                <XAxis dataKey="name" {...chartAxisProps} />
-                <YAxis {...chartAxisProps} />
-                <Tooltip
-                  formatter={(v) => formatCurrency(Number(v), cur)}
-                  contentStyle={chartTooltipStyle}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="Income"
-                  stroke="#10b981"
-                  strokeWidth={2.5}
-                  fill="url(#gInc)"
-                  dot={false}
-                  activeDot={{ r: 5, fill: "#10b981", strokeWidth: 2, stroke: "#fff" }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="Expense"
-                  stroke="#f43f5e"
-                  strokeWidth={2.5}
-                  fill="url(#gExp)"
-                  dot={false}
-                  activeDot={{ r: 5, fill: "#f43f5e", strokeWidth: 2, stroke: "#fff" }}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          )}
+          <div className="px-3 pb-4 pt-2">
+            {areaData.every((d) => d.Income === 0 && d.Expense === 0) ? (
+              <EmptyState
+                title="No data yet"
+                description="Add transactions to see your income vs expense trend."
+              />
+            ) : (
+              <ResponsiveContainer width="100%" height={300}>
+                <AreaChart data={areaData}>
+                  <defs>
+                    <linearGradient id="gInc" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#10b981" stopOpacity={0.35} />
+                      <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="gExp" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#f43f5e" stopOpacity={0.35} />
+                      <stop offset="100%" stopColor="#f43f5e" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid {...chartGridProps} />
+                  <XAxis dataKey="name" {...chartAxisProps} />
+                  <YAxis {...chartAxisProps} />
+                  <Tooltip
+                    formatter={(v) => formatCurrency(Number(v), cur)}
+                    contentStyle={chartTooltipStyle}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="Income"
+                    stroke="#10b981"
+                    strokeWidth={2.5}
+                    fill="url(#gInc)"
+                    dot={false}
+                    activeDot={{ r: 5, fill: "#10b981", strokeWidth: 2, stroke: "#fff" }}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="Expense"
+                    stroke="#f43f5e"
+                    strokeWidth={2.5}
+                    fill="url(#gExp)"
+                    dot={false}
+                    activeDot={{ r: 5, fill: "#f43f5e", strokeWidth: 2, stroke: "#fff" }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            )}
+          </div>
         </Card>
 
         <Card>
-          <div className="mb-4">
+          <div className="mb-4 border-b border-slate-100 px-5 py-4">
             <h3 className="font-bold text-slate-800">Spending by Category</h3>
             <p className="text-xs text-slate-400">This month</p>
           </div>
-          {expenseByCategoryArray.length === 0 ? (
-            <EmptyState
-              title="No expenses this month"
-              description="Your category breakdown will appear here."
-            />
-          ) : (
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={expenseByCategoryArray}
-                  dataKey="value"
-                  nameKey="name"
-                  innerRadius={55}
-                  outerRadius={90}
-                  paddingAngle={3}
-                  cornerRadius={6}
-                >
-                  {expenseByCategoryArray.map((entry, i) => (
-                    <Cell key={i} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip
-                  formatter={(v) => formatCurrency(Number(v), cur)}
-                  contentStyle={chartTooltipStyle}
-                />
-                <Legend
-                  wrapperStyle={{ fontSize: 12 }}
-                  iconType="circle"
-                  iconSize={8}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          )}
+          <div className="px-3 pb-4 pt-2">
+            {expenseByCategoryArray.length === 0 ? (
+              <EmptyState
+                title="No expenses this month"
+                description="Your category breakdown will appear here."
+              />
+            ) : (
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={expenseByCategoryArray}
+                    dataKey="value"
+                    nameKey="name"
+                    innerRadius={55}
+                    outerRadius={90}
+                    paddingAngle={3}
+                    cornerRadius={6}
+                  >
+                    {expenseByCategoryArray.map((entry, i) => (
+                      <Cell key={i} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    formatter={(v) => formatCurrency(Number(v), cur)}
+                    contentStyle={chartTooltipStyle}
+                  />
+                  <Legend
+                    wrapperStyle={{ fontSize: 12 }}
+                    iconType="circle"
+                    iconSize={8}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            )}
+          </div>
         </Card>
       </div>
 
       {/* Recent transactions */}
-      <Card>
-        <div className="mb-4 flex items-center justify-between">
+      <Card className="overflow-hidden">
+        <div className="mb-4 flex items-center justify-between border-b border-slate-100 px-5 py-4">
           <div>
             <h3 className="font-bold text-slate-800">Recent Transactions</h3>
             <p className="text-xs text-slate-400">Your latest activity</p>
@@ -238,72 +242,74 @@ const Dashboard = () => {
             View all
           </Button>
         </div>
-        {recentTransactions.length === 0 ? (
-          <EmptyState
-            title="No transactions yet"
-            description="Start tracking by adding your first transaction."
-            action={
-              <Button onClick={() => navigate("/transactions?new=1")}>
-                <Plus size={18} /> Add Transaction
-              </Button>
-            }
-          />
-        ) : (
-          <div className="divide-y divide-slate-100">
-            {recentTransactions.map((t) => {
-              const Icon = getIcon(t.category?.icon ?? "Wallet");
-              const isIncome = t.type === "income";
-              return (
-                <div
-                  key={t.id}
-                  className="group flex items-center gap-4 py-3 transition-colors hover:bg-slate-50/50"
-                >
+        <div className="px-2">
+          {recentTransactions.length === 0 ? (
+            <EmptyState
+              title="No transactions yet"
+              description="Start tracking by adding your first transaction."
+              action={
+                <Button onClick={() => navigate("/transactions?new=1")}>
+                  <Plus size={18} /> Add Transaction
+                </Button>
+              }
+            />
+          ) : (
+            <div className="divide-y divide-slate-50">
+              {recentTransactions.map((t) => {
+                const Icon = getIcon(t.category?.icon ?? "Wallet");
+                const isIncome = t.type === "income";
+                return (
                   <div
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform group-hover:scale-105"
-                    style={{
-                      backgroundColor: `${t.category?.color ?? "#64748b"}1a`,
-                      color: t.category?.color ?? "#64748b",
-                    }}
+                    key={t.id}
+                    className="group flex items-center gap-4 px-3 py-3 transition-colors hover:bg-slate-50/50"
                   >
-                    <Icon size={18} />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-semibold text-slate-800">
-                      {t.category?.name ?? "Unknown"}
-                    </p>
-                    <p className="truncate text-xs text-slate-400">
-                      {t.note || t.account?.name || formatShortDate(t.date)}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p
-                      className={`text-sm font-bold ${
-                        isIncome ? "text-emerald-600" : "text-rose-600"
+                    <div
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform group-hover:scale-105"
+                      style={{
+                        backgroundColor: `${t.category?.color ?? "#64748b"}1a`,
+                        color: t.category?.color ?? "#64748b",
+                      }}
+                    >
+                      <Icon size={18} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-semibold text-slate-800">
+                        {t.category?.name ?? "Unknown"}
+                      </p>
+                      <p className="truncate text-xs text-slate-400">
+                        {t.note || t.account?.name || formatShortDate(t.date)}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p
+                        className={`text-sm font-bold ${
+                          isIncome ? "text-brand-600" : "text-rose-600"
+                        }`}
+                      >
+                        {isIncome ? "+" : "-"}
+                        {formatCurrency(Number(t.amount), cur)}
+                      </p>
+                      <p className="text-xs text-slate-400">
+                        {formatShortDate(t.date)}
+                      </p>
+                    </div>
+                    <div
+                      className={`flex h-7 w-7 items-center justify-center rounded-full ${
+                        isIncome ? "bg-brand-50" : "bg-rose-50"
                       }`}
                     >
-                      {isIncome ? "+" : "-"}
-                      {formatCurrency(Number(t.amount), cur)}
-                    </p>
-                    <p className="text-xs text-slate-400">
-                      {formatShortDate(t.date)}
-                    </p>
+                      {isIncome ? (
+                        <ArrowUpRight size={14} className="text-brand-500" />
+                      ) : (
+                        <ArrowDownRight size={14} className="text-rose-500" />
+                      )}
+                    </div>
                   </div>
-                  <div
-                    className={`flex h-7 w-7 items-center justify-center rounded-full ${
-                      isIncome ? "bg-emerald-50" : "bg-rose-50"
-                    }`}
-                  >
-                    {isIncome ? (
-                      <ArrowUpRight size={14} className="text-emerald-500" />
-                    ) : (
-                      <ArrowDownRight size={14} className="text-rose-500" />
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
+                );
+              })}
+            </div>
+          )}
+        </div>
       </Card>
     </div>
   );

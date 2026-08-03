@@ -10,31 +10,29 @@ interface StatCardProps {
   icon: ReactNode;
   tone?: Tone;
   subtitle?: string;
+  trend?: "up" | "down" | "flat";
 }
 
-const toneClasses: Record<
-  Tone,
-  { gradient: string; ring: string; text: string }
-> = {
+const toneClasses: Record<Tone, { iconBg: string; iconText: string; accent: string }> = {
   emerald: {
-    gradient: "from-emerald-400 to-emerald-600",
-    ring: "shadow-emerald-500/30",
-    text: "text-emerald-600",
+    iconBg: "bg-brand-50",
+    iconText: "text-brand-600",
+    accent: "from-brand-500/0 to-brand-500/8",
   },
   blue: {
-    gradient: "from-blue-400 to-blue-600",
-    ring: "shadow-blue-500/30",
-    text: "text-blue-600",
+    iconBg: "bg-blue-50",
+    iconText: "text-blue-600",
+    accent: "from-blue-500/0 to-blue-500/8",
   },
   rose: {
-    gradient: "from-rose-400 to-rose-600",
-    ring: "shadow-rose-500/30",
-    text: "text-rose-600",
+    iconBg: "bg-rose-50",
+    iconText: "text-rose-600",
+    accent: "from-rose-500/0 to-rose-500/8",
   },
   amber: {
-    gradient: "from-amber-400 to-amber-600",
-    ring: "shadow-amber-500/30",
-    text: "text-amber-600",
+    iconBg: "bg-amber-50",
+    iconText: "text-amber-600",
+    accent: "from-amber-500/0 to-amber-500/8",
   },
 };
 
@@ -50,27 +48,25 @@ const StatCard = ({
     <Card hover className="group relative overflow-hidden p-5">
       <div
         className={clsx(
-          "absolute inset-x-0 top-0 h-1 bg-gradient-to-r opacity-0 transition-opacity duration-300 group-hover:opacity-100",
-          t.gradient
+          "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-400 group-hover:opacity-100",
+          t.accent
         )}
       />
-      <div className="flex items-start justify-between">
+      <div className="relative flex items-start justify-between">
         <div className="min-w-0">
-          <p className="text-sm font-semibold text-slate-500">{title}</p>
-          <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-slate-800">
+          <p className="text-[13px] font-semibold text-slate-500">{title}</p>
+          <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-slate-900">
             {value}
           </h2>
           {subtitle && (
-            <p className="mt-1.5 text-xs font-medium text-slate-400">
-              {subtitle}
-            </p>
+            <p className="mt-1.5 text-xs font-medium text-slate-400">{subtitle}</p>
           )}
         </div>
         <div
           className={clsx(
-            "flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3",
-            t.gradient,
-            t.ring
+            "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110",
+            t.iconBg,
+            t.iconText
           )}
         >
           {icon}

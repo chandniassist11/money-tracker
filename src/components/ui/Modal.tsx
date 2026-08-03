@@ -36,20 +36,20 @@ const Modal = ({ open, onClose, title, children, size = "md" }: ModalProps) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
-        className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm animate-fade-in"
+        className="absolute inset-0 animate-fade-in bg-slate-900/40 backdrop-blur-sm"
         onClick={onClose}
       />
       <div
         className={clsx(
-          "relative z-10 w-full overflow-hidden rounded-2xl bg-white shadow-2xl shadow-slate-900/20 animate-scale-in",
+          "relative z-10 w-full animate-scale-in overflow-hidden rounded-2xl bg-white shadow-2xl shadow-slate-900/20",
           sizeClasses[size]
         )}
       >
-        <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/50 px-6 py-4">
-          <h3 className="text-lg font-bold text-slate-800">{title}</h3>
+        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+          <h3 className="text-lg font-bold tracking-tight text-slate-800">{title}</h3>
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-slate-400 transition-all hover:bg-slate-200 hover:text-slate-600"
+            className="rounded-lg p-1.5 text-slate-400 transition-all hover:bg-slate-100 hover:text-slate-600"
           >
             <X size={20} />
           </button>

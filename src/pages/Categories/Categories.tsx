@@ -68,7 +68,7 @@ const Categories = () => {
       </div>
 
       <Card className="overflow-hidden">
-        <div className="border-b border-slate-100 bg-slate-50/50 px-4 py-3 sm:px-5">
+        <div className="border-b border-slate-100 bg-slate-50/40 px-4 py-3 sm:px-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="inline-flex rounded-xl bg-slate-100 p-1">
               <button
@@ -85,7 +85,7 @@ const Categories = () => {
                 onClick={() => setTab("income")}
                 className={`rounded-lg px-4 py-1.5 text-sm font-semibold transition ${
                   tab === "income"
-                    ? "bg-white text-emerald-600 shadow-sm"
+                    ? "bg-white text-brand-600 shadow-sm"
                     : "text-slate-500 hover:text-slate-700"
                 }`}
               >
@@ -127,7 +127,7 @@ const Categories = () => {
               return (
                 <div
                   key={c.id}
-                  className="group flex items-center gap-3 rounded-2xl border border-slate-200/80 p-3.5 transition-all duration-200 hover:border-slate-300 hover:shadow-md hover:shadow-slate-200/50"
+                  className="group flex items-center gap-3 rounded-2xl border border-slate-200/70 p-3.5 transition-all duration-200 hover:border-slate-300 hover:shadow-md hover:shadow-slate-200/50"
                 >
                   <div
                     className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110"
@@ -147,7 +147,7 @@ const Categories = () => {
                         setEditing(c);
                         setModalOpen(true);
                       }}
-                      className="rounded-lg p-2 text-slate-400 transition hover:bg-emerald-50 hover:text-emerald-600"
+                      className="rounded-lg p-2 text-slate-400 transition hover:bg-brand-50 hover:text-brand-600"
                     >
                       <Pencil size={16} />
                     </button>

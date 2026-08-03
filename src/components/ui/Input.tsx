@@ -28,10 +28,9 @@ const Input = ({ label, error, icon, className, id, ...props }: InputProps) => {
         <input
           id={inputId}
           className={clsx(
-            "w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-slate-900 outline-none transition-all duration-200 placeholder:text-slate-400 hover:border-slate-300 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10",
+            "w-full rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-2.5 text-slate-900 outline-none transition-all duration-200 placeholder:text-slate-400 hover:border-slate-300 hover:bg-white focus:border-brand-500 focus:bg-white focus:ring-4 focus:ring-brand-500/10",
             icon && "pl-10",
-            error &&
-              "border-rose-400 focus:border-rose-500 focus:ring-rose-500/10",
+            error && "border-rose-400 focus:border-rose-500 focus:ring-rose-500/10",
             className
           )}
           {...props}

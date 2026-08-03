@@ -1,5 +1,14 @@
 import { useMemo, useState } from "react";
-import { Plus, Pencil, Trash2, ChevronLeft, ChevronRight, Target, TrendingDown, PiggyBank } from "lucide-react";
+import {
+  Plus,
+  Pencil,
+  Trash2,
+  ChevronLeft,
+  ChevronRight,
+  Target,
+  TrendingDown,
+  PiggyBank,
+} from "lucide-react";
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
 import Modal from "../../components/ui/Modal";
@@ -87,7 +96,7 @@ const BudgetPage = () => {
             {!isCurrentMonth && (
               <button
                 onClick={() => setMonth(currentMonth())}
-                className="text-xs font-semibold text-emerald-600 hover:text-emerald-700"
+                className="text-xs font-semibold text-brand-600 hover:text-brand-700"
               >
                 Back to today
               </button>
@@ -140,12 +149,12 @@ const BudgetPage = () => {
         </Card>
         <Card hover className="p-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
               <PiggyBank size={20} />
             </div>
             <div>
               <p className="text-sm font-medium text-slate-500">Remaining</p>
-              <p className="text-2xl font-extrabold tracking-tight text-emerald-600">
+              <p className="text-2xl font-extrabold tracking-tight text-brand-600">
                 {formatCurrency(totalLeft, cur)}
               </p>
             </div>
@@ -202,7 +211,7 @@ const BudgetPage = () => {
               return (
                 <div
                   key={b.id}
-                  className="group rounded-2xl border border-slate-200/80 p-4 transition-all duration-200 hover:border-slate-300 hover:shadow-md hover:shadow-slate-200/50"
+                  className="group rounded-2xl border border-slate-200/70 p-4 transition-all duration-200 hover:border-slate-300 hover:shadow-md hover:shadow-slate-200/50"
                 >
                   <div className="flex items-center gap-3">
                     <div
@@ -236,7 +245,7 @@ const BudgetPage = () => {
                             setEditing(b);
                             setModalOpen(true);
                           }}
-                          className="rounded-lg p-1.5 text-slate-400 transition hover:bg-emerald-50 hover:text-emerald-600"
+                          className="rounded-lg p-1.5 text-slate-400 transition hover:bg-brand-50 hover:text-brand-600"
                         >
                           <Pencil size={15} />
                         </button>
@@ -253,7 +262,7 @@ const BudgetPage = () => {
                     value={spent}
                     max={Number(b.amount)}
                     className="mt-3"
-                    colorClass={over ? "bg-rose-500" : "bg-gradient-to-r from-emerald-400 to-emerald-500"}
+                    colorClass={over ? "bg-rose-500" : "bg-gradient-to-r from-brand-400 to-brand-500"}
                   />
                   {over && (
                     <p className="mt-2 text-xs font-medium text-rose-500">

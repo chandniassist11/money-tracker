@@ -5,8 +5,8 @@ type Tone = "income" | "expense" | "neutral" | "warning";
 
 const toneClasses: Record<Tone, { badge: string; dot: string }> = {
   income: {
-    badge: "bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-200",
-    dot: "bg-emerald-500",
+    badge: "bg-brand-50 text-brand-700 ring-1 ring-inset ring-brand-200",
+    dot: "bg-brand-500",
   },
   expense: {
     badge: "bg-rose-50 text-rose-700 ring-1 ring-inset ring-rose-200",

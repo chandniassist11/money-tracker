@@ -100,7 +100,7 @@ const AccountFormModal = ({ open, onClose, editing }: AccountFormModalProps) => 
         />
 
         <div>
-          <label className="mb-1.5 block text-sm font-medium text-slate-700">
+          <label className="mb-1.5 block text-sm font-semibold text-slate-700">
             Color
           </label>
           <div className="flex flex-wrap gap-2">

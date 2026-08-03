@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
-import { useAppSelector } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import {
   createTransaction,
   updateTransaction,
@@ -27,8 +27,6 @@ interface TransactionFormModalProps {
   onClose: () => void;
   editing?: Transaction | null;
 }
-
-import { useAppDispatch } from "../../store";
 
 const TransactionFormModal = ({
   open,
@@ -96,9 +94,9 @@ const TransactionFormModal = ({
               setValue("type", "expense");
               setValue("category_id", "");
             }}
-            className={`rounded-xl border px-4 py-3 text-sm font-medium transition ${
+            className={`rounded-xl border px-4 py-3 text-sm font-semibold transition ${
               type === "expense"
-                ? "border-rose-500 bg-rose-50 text-rose-600"
+                ? "border-rose-400 bg-rose-50 text-rose-600 ring-2 ring-rose-200/40"
                 : "border-slate-200 text-slate-500 hover:border-slate-300"
             }`}
           >
@@ -110,9 +108,9 @@ const TransactionFormModal = ({
               setValue("type", "income");
               setValue("category_id", "");
             }}
-            className={`rounded-xl border px-4 py-3 text-sm font-medium transition ${
+            className={`rounded-xl border px-4 py-3 text-sm font-semibold transition ${
               type === "income"
-                ? "border-emerald-500 bg-emerald-50 text-emerald-600"
+                ? "border-brand-400 bg-brand-50 text-brand-600 ring-2 ring-brand-200/40"
                 : "border-slate-200 text-slate-500 hover:border-slate-300"
             }`}
           >

@@ -21,14 +21,17 @@ const ProgressBar = ({
     <div
       className={clsx(
         "h-2.5 w-full overflow-hidden rounded-full",
-        trackClass ?? "bg-slate-150 bg-slate-200/70",
+        trackClass ?? "bg-slate-200/70",
         className
       )}
     >
       <div
         className={clsx(
           "h-full rounded-full transition-all duration-700 ease-out",
-          colorClass ?? (over ? "bg-rose-500" : "bg-gradient-to-r from-emerald-400 to-emerald-500")
+          colorClass ??
+            (over
+              ? "bg-rose-500"
+              : "bg-gradient-to-r from-brand-400 to-brand-500")
         )}
         style={{ width: `${pct}%` }}
       />

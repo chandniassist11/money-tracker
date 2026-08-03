@@ -54,7 +54,7 @@ const Settings = () => {
         {/* Profile */}
         <Card className="p-5">
           <div className="mb-5 flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 text-white shadow-lg shadow-emerald-500/25">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-400 to-brand-600 text-white shadow-lg shadow-brand-500/25">
               <User size={22} />
             </div>
             <div>
@@ -149,9 +149,9 @@ const Settings = () => {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-            <div className="rounded-xl bg-emerald-50/50 p-3.5">
+            <div className="rounded-xl bg-brand-50/50 p-3.5">
               <p className="text-xs font-medium text-slate-400">Total Income</p>
-              <p className="mt-1 text-lg font-extrabold text-emerald-600">
+              <p className="mt-1 text-lg font-extrabold text-brand-600">
                 {formatCurrency(totalIncome, settings.currency)}
               </p>
             </div>
@@ -165,7 +165,7 @@ const Settings = () => {
               <p className="text-xs font-medium text-slate-400">Net</p>
               <p
                 className={`mt-1 text-lg font-extrabold ${
-                  totalIncome - totalExpense >= 0 ? "text-emerald-600" : "text-rose-600"
+                  totalIncome - totalExpense >= 0 ? "text-brand-600" : "text-rose-600"
                 }`}
               >
                 {formatCurrency(totalIncome - totalExpense, settings.currency)}
@@ -178,7 +178,7 @@ const Settings = () => {
         <Card className="p-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 text-white shadow-md shadow-emerald-500/25">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 text-white shadow-md shadow-brand-500/25">
                 <Sparkles size={18} />
               </div>
               <div>
@@ -186,8 +186,8 @@ const Settings = () => {
                 <p className="text-sm text-slate-500">Version {APP_VERSION}</p>
               </div>
             </div>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-200/60">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Active
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700 ring-1 ring-brand-200/60">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-500" /> Active
             </span>
           </div>
         </Card>

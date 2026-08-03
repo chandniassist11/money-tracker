@@ -113,7 +113,7 @@ const CategoryFormModal = ({
         />
 
         <div>
-          <label className="mb-1.5 block text-sm font-medium text-slate-700">
+          <label className="mb-1.5 block text-sm font-semibold text-slate-700">
             Color
           </label>
           <div className="flex flex-wrap gap-2">
@@ -134,7 +134,7 @@ const CategoryFormModal = ({
         </div>
 
         <div>
-          <label className="mb-1.5 block text-sm font-medium text-slate-700">
+          <label className="mb-1.5 block text-sm font-semibold text-slate-700">
             Icon
           </label>
           <div className="grid grid-cols-6 gap-2">
@@ -148,7 +148,7 @@ const CategoryFormModal = ({
                   onClick={() => reset({ ...watch(), icon: name })}
                   className={`flex h-10 items-center justify-center rounded-lg border transition ${
                     active
-                      ? "border-emerald-500 bg-emerald-50 text-emerald-600"
+                      ? "border-brand-400 bg-brand-50 text-brand-600 ring-2 ring-brand-200/40"
                       : "border-slate-200 text-slate-500 hover:border-slate-300"
                   }`}
                 >

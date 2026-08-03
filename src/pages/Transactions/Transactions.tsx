@@ -1,6 +1,15 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Plus, Search, Pencil, Trash2, ArrowUpRight, ArrowDownRight, ListFilter as Filter, Receipt } from "lucide-react";
+import {
+  Plus,
+  Search,
+  Pencil,
+  Trash2,
+  ArrowUpRight,
+  ArrowDownRight,
+  ListFilter as Filter,
+  Receipt,
+} from "lucide-react";
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
@@ -100,7 +109,7 @@ const Transactions = () => {
       </div>
 
       <Card className="overflow-hidden">
-        <div className="border-b border-slate-100 bg-slate-50/50 px-4 py-3 sm:px-5">
+        <div className="border-b border-slate-100 bg-slate-50/40 px-4 py-3 sm:px-5">
           <div className="flex flex-wrap items-center gap-3">
             <div className="min-w-[200px] flex-1">
               <Input
@@ -179,7 +188,7 @@ const Transactions = () => {
                 {filtered.map((t) => {
                   const Icon = getIcon(t.category?.icon ?? "Wallet");
                   return (
-                    <tr key={t.id} className="group transition-colors hover:bg-slate-50/60">
+                    <tr key={t.id} className="group transition-colors hover:bg-slate-50/40">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           <div
@@ -217,7 +226,7 @@ const Transactions = () => {
                       <td className="px-4 py-3 text-right">
                         <span
                           className={`inline-flex items-center gap-1 font-bold ${
-                            t.type === "income" ? "text-emerald-600" : "text-rose-600"
+                            t.type === "income" ? "text-brand-600" : "text-rose-600"
                           }`}
                         >
                           {t.type === "income" ? (
@@ -235,7 +244,7 @@ const Transactions = () => {
                               setEditing(t);
                               setModalOpen(true);
                             }}
-                            className="rounded-lg p-2 text-slate-400 transition hover:bg-emerald-50 hover:text-emerald-600"
+                            className="rounded-lg p-2 text-slate-400 transition hover:bg-brand-50 hover:text-brand-600"
                           >
                             <Pencil size={16} />
                           </button>

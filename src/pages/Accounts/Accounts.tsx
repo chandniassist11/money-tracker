@@ -122,7 +122,7 @@ const Accounts = () => {
                         setEditing(a);
                         setModalOpen(true);
                       }}
-                      className="rounded-lg p-2 text-slate-400 transition hover:bg-emerald-50 hover:text-emerald-600"
+                      className="rounded-lg p-2 text-slate-400 transition hover:bg-brand-50 hover:text-brand-600"
                     >
                       <Pencil size={16} />
                     </button>

@@ -8,10 +8,11 @@ const MainLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-slate-100 via-slate-100 to-slate-200/50">
+    <div className="relative flex min-h-screen bg-[#f6f7f9]">
+      <div className="pointer-events-none fixed inset-0 bg-grid opacity-40" />
       <Sidebar mobileOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
 
-      <div className="flex flex-1 flex-col">
+      <div className="relative flex flex-1 flex-col lg:pl-[264px]">
         <Navbar onMenuClick={() => setMobileOpen(true)} />
 
         <PageContainer>
