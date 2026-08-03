@@ -3,10 +3,7 @@ import clsx from "clsx";
 
 type Tone = "income" | "expense" | "neutral" | "warning";
 
-const toneClasses: Record
-  Tone,
-  { badge: string; dot: string }
-> = {
+const toneClasses: Record<Tone, { badge: string; dot: string }> = {
   income: {
     badge: "bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-200",
     dot: "bg-emerald-500",
